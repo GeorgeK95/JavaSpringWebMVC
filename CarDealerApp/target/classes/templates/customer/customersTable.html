@@ -1,0 +1,26 @@
+<main>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Birthdate</th>
+            <th>Young Driver</th>
+        </tr>
+        <th:block>
+            <div th:each="customer : ${customers}" th:object="${customer}">
+                <tr>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{birthDate}"></td>
+
+                    <div th:switch="${customer.isYoungDriver()}">
+                        <td th:case="true" th:text="true"></td>
+                        <td th:case="false" th:text="false"></td>
+                    </div>
+
+                </tr>
+            </div>
+
+
+        </th:block>
+
+    </table>
+</main>

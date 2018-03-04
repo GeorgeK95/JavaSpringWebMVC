@@ -1,0 +1,35 @@
+<main>
+    <table>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+
+            <th:block th:if="${customerName} == null">
+                <th>Travelled Distance</th>
+            </th:block>
+            <th:block th:unless="${customerName} == null">
+                <th>Customer Name</th>
+
+            </th:block>
+        </tr>
+
+        <th:block>
+            <div th:each="car : ${cars}" th:object="${car}">
+                <tr>
+                    <td th:text="*{make}"></td>
+                    <td th:text="*{model}"></td>
+
+                    <th:block th:if="${customerName} == null">
+                        <td th:text="*{travelledDistance}"></td>
+                    </th:block>
+                    <th:block th:unless="${customerName} == null">
+                        <td th:text="${customerName}"></td>
+                    </th:block>
+
+                </tr>
+            </div>
+
+        </th:block>
+
+    </table>
+</main>

@@ -1,0 +1,15 @@
+<main>
+    <table>
+        <tr>
+            <th>Sale Id</th>
+            <th>Sale Discount</th>
+        </tr>
+
+        <th:block th:each="sale : ${sales}" th:object="${sale}">
+            <tr>
+                <td th:text="${sale.getId()}"></td>
+                <td th:text="${sale.getDiscount()}"></td>
+            </tr>
+        </th:block>
+    </table>
+</main>

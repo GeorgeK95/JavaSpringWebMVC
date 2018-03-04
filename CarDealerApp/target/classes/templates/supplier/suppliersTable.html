@@ -1,0 +1,18 @@
+<main>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Num of parts</th>
+        </tr>
+        <th:block>
+            <div th:each="supplier : ${suppliers}" th:object="${supplier}">
+                <tr>
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="${#lists.size(supplier.parts)}"></td>
+                </tr>
+            </div>
+        </th:block>
+    </table>
+</main>

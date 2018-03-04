@@ -1,0 +1,21 @@
+<main>
+    <th:block th:object="${car}">
+        <h1 style="text-align: center" th:text="|*{make} *{model} *{travelledDistance}|"></h1>
+    </th:block>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+
+        <th:block>
+            <div th:each="part : ${parts}" th:object="${part}">
+                <tr>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{price}"></td>
+                </tr>
+            </div>
+        </th:block>
+
+    </table>
+</main>

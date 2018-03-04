@@ -1,0 +1,57 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/parts/add}" method="post">
+                <fieldset>
+                    <legend class="text-center">Add Part</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="name">Name</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="text" id="name" placeholder="Part name" name="name"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="price">Price</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="number" step="0.01" id="price" placeholder="Part price"
+                                   min="1"
+                                   name="price"
+                                   required="required"
+                                   value="1"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="quantity">Quantity</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="number" step="1" id="quantity" placeholder="Part quantity"
+                                   name="quantity"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="quantity"></label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="supplierId">
+                                <option th:each="supplier : ${suppliers}"
+                                        th:value="${supplier.getId()}"
+                                        th:text="${supplier.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/customers/all/ascending}">Cancel</a>
+                            <input value="Add" type="submit" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>
