@@ -7,9 +7,21 @@ import java.math.BigDecimal;
  */
 public class PartResponseModel {
 
+    private Long id;
+
     private String name;
 
     private BigDecimal price;
+
+    private long quantity;
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
 
     public String getName() {
         return name;
@@ -25,5 +37,13 @@ public class PartResponseModel {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

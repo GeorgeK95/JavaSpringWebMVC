@@ -1,0 +1,42 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/parts/edit/{id}(id=${part.id})}" th:object="${part}"
+                  method="POST">
+                <fieldset>
+                    <legend class="text-center">Edit Part</legend>
+
+                    <th:block th:unless="${part_edit_notification} == null">
+                        <div class="alert alert-success text-center">
+                            <strong th:text="${part_edit_notification}"></strong>
+                        </div>
+                    </th:block>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="price">Part Price</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="price" name="price" type="number" required="required"
+                                   step="0.01"
+                                   th:value="${part.price}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="quantity">Part Quantity</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="quantity" name="quantity" type="number" required="required"
+                                   th:value="${part.quantity}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/parts/all}">Cancel</a>
+                            <input type="submit" class="btn btn-success" value="Edit"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

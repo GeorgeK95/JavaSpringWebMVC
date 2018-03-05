@@ -1,7 +1,6 @@
 package carDealer.controller;
 
 import carDealer.model.request.AddPartRequestModel;
-import carDealer.model.response.CarResponseModel;
 import carDealer.model.response.PartResponseModel;
 import carDealer.model.response.SupplierResponseModel;
 import carDealer.service.CarServices;
@@ -13,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ import java.util.List;
  * Created by George-Lenovo on 03/03/2018.
  */
 @Controller
+@RequestMapping("/parts/")
 public class PartController {
-
 
     private final CarServices carServices;
     private final PartServices partServices;
@@ -34,19 +35,19 @@ public class PartController {
         this.supplierServices = supplierServices;
     }
 
-    @GetMapping("/cars/{id}/parts")
-    public String carsWithParts(@PathVariable Long id, Model model) {
-        CarResponseModel car = this.carServices.findById(id);
-        List<PartResponseModel> partsByCarId = this.partServices.getPartsByCarId(id);
+    @GetMapping("all")
+    public String all(Model model) {
+        List<PartResponseModel> allParts = this.partServices.findAll();
 
-        model.addAttribute("car", car);
-        model.addAttribute("parts", partsByCarId);
+        model.addAttribute("parts", allParts);
         model.addAttribute("view", "part/partsTable");
+        model.addAttribute("action", "delete");
 
         return "base-layout";
     }
 
-    @GetMapping("/parts/add")
+    //CRUD
+    @GetMapping("add")
     public String add(Model model) {
         List<SupplierResponseModel> allSuppliers = this.supplierServices.findAll();
 
@@ -56,8 +57,48 @@ public class PartController {
         return "base-layout";
     }
 
-    @PostMapping("/parts/add")
-    public String addProcess(AddPartRequestModel requestModel) {
+    @PostMapping("add")
+    public String addProcess(AddPartRequestModel requestModel, RedirectAttributes model) {
+        this.partServices.addPart(requestModel, model);
+
         return "redirect:/parts/add";
     }
+
+    @GetMapping("edit/{id}")
+    public String edit(Model model, @PathVariable Long id) {
+        PartResponseModel partToEdit = this.partServices.findOne(id);
+
+        model.addAttribute("view", "part/edit");
+        model.addAttribute("part", partToEdit);
+
+        return "base-layout";
+    }
+
+    @PostMapping("edit/{id}")
+    public String editProcess(@PathVariable Long id, AddPartRequestModel requestModel,
+                              RedirectAttributes model) {
+        this.partServices.editPart(id, requestModel, model);
+
+        return "redirect:/parts/edit/".concat(String.valueOf(id));
+    }
+
+    @GetMapping("delete/{id}")
+    public String delete(Model model, @PathVariable Long id) {
+        PartResponseModel partToDelete = this.partServices.findOne(id);
+
+        model.addAttribute("part", partToDelete);
+        model.addAttribute("view", "part/delete");
+
+        return "base-layout";
+    }
+
+    @PostMapping("delete/{id}")
+    public String deleteProcess(@PathVariable Long id, AddPartRequestModel requestModel,
+                                RedirectAttributes model) {
+        this.partServices.deletePart(id, requestModel, model);
+
+        return "redirect:/parts/all";
+    }
+
+
 }

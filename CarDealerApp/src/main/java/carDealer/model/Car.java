@@ -27,7 +27,7 @@ public class Car {
     @OneToOne(mappedBy = "car")
     private Sale sale;
 
-    @ManyToMany(mappedBy = "cars")
+    @ManyToMany(mappedBy = "cars", cascade = CascadeType.ALL)
     private Set<Part> parts;
 
     public Long getId() {

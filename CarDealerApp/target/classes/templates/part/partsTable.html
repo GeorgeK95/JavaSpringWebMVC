@@ -1,11 +1,15 @@
 <main>
-    <th:block th:object="${car}">
+    <th:block th:if="${car} != null" th:object="${car}">
         <h1 style="text-align: center" th:text="|*{make} *{model} *{travelledDistance}|"></h1>
     </th:block>
     <table>
         <tr>
             <th>Name</th>
             <th>Price</th>
+
+            <th:block th:if="${action} != null">
+                <th>Action</th>
+            </th:block>
         </tr>
 
         <th:block>
@@ -13,6 +17,16 @@
                 <tr>
                     <td th:text="*{name}"></td>
                     <td th:text="*{price}"></td>
+
+                    <th:block th:if="${action} != null" th:switch="${action}">
+                        <th:block th:case="'delete'">
+                            <td><a th:href="@{/parts/delete/{id}(id=${part.getId()})}">Delete</a></td>
+                        </th:block>
+                        <th:block th:case="'edit'">
+                            <td><a th:href="@{/parts/edit/{id}(id=${part.getId()})}">Edit</a></td>
+                        </th:block>
+                    </th:block>
+
                 </tr>
             </div>
         </th:block>

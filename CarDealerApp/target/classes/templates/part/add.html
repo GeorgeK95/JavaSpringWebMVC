@@ -5,6 +5,12 @@
                 <fieldset>
                     <legend class="text-center">Add Part</legend>
 
+                    <th:block th:unless="${part_add_notification} == null">
+                        <div class="alert alert-success text-center">
+                            <strong th:text="${part_add_notification}"></strong>
+                        </div>
+                    </th:block>
+
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="name">Name</label>
                         <div class="col-sm-4 ">

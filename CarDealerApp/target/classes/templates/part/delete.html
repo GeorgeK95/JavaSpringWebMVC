@@ -1,0 +1,48 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/parts/delete/{id}(id=${part.id})}" method="POST">
+                <fieldset>
+                    <legend class="text-center">Delete Part</legend>
+
+                    <th:block th:unless="${part_delete_notification} == null">
+                        <div class="alert alert-success text-center">
+                            <strong th:text="${part_delete_notification}"></strong>
+                        </div>
+                    </th:block>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="name">Part Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   th:value="${part.name}" disabled="disabled"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="price">Part Price</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="price" name="price"
+                                   th:value="${part.price}" disabled="disabled"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="quantity">Part Quantity</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="quantity" name="quantity"
+                                   th:value="${part.quantity}" disabled="disabled"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/parts/all}">Cancel</a>
+                            <input type="submit" class="btn btn-danger" value="Delete"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

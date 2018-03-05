@@ -117,4 +117,8 @@ public class CustomerServices {
         model.addFlashAttribute("customer_notification",
                 value);
     }
+
+    public List<CustomerResponseModel> findAll() {
+        return DTOConvertUtil.convert(this.repository.findAll(), CustomerResponseModel.class);
+    }
 }

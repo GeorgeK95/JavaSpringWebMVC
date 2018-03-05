@@ -1,0 +1,63 @@
+<amin>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/register}" method="post">
+                <fieldset>
+                    <legend class="text-center">Register</legend>
+
+                    <th:block th:unless="${user_registration_notification_false} == null">
+                        <div class="alert alert-success text-center">
+                            <strong th:text="${user_registration_notification_false}"></strong>
+                        </div>
+                    </th:block>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_email">Email</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="email" id="user_email" placeholder="Email" name="email"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="username">Username</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="text" id="username" placeholder="Username"
+                                   name="username" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_password_first">Password</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="user_password_first" placeholder="Password"
+                                   name="password" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_password_second">Confirm Password</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="user_password_second" placeholder="Password"
+                                   name="confirmPassword" required="required"/>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <label class="col-sm-4 control-label" for="user_role">Administrator</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="checkbox" name="checkbox" id="user_role"/>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                            <input value="Submit" type="submit" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</amin>

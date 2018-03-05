@@ -1,16 +1,21 @@
 package carDealer.controller;
 
+import carDealer.model.request.AddSaleRequestModel;
 import carDealer.model.response.CarResponseModel;
 import carDealer.model.response.SaleResponseModel;
 import carDealer.service.CarServices;
+import carDealer.service.CustomerServices;
 import carDealer.service.SaleServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +31,13 @@ public class SaleController {
 
     private final CarServices carServices;
 
+    private final CustomerServices customerServices;
+
     @Autowired
-    public SaleController(SaleServices saleServices, CarServices carServices) {
+    public SaleController(SaleServices saleServices, CarServices carServices, CustomerServices customerServices) {
         this.saleServices = saleServices;
         this.carServices = carServices;
+        this.customerServices = customerServices;
     }
 
     @GetMapping("")
@@ -41,6 +49,46 @@ public class SaleController {
         model.addAttribute("view", "sale/salesTable");
 
         return "base-layout";
+    }
+
+    @GetMapping("/add")
+    public String addSale(Model model) {
+        model.addAttribute("view", "sale/add");
+        model.addAttribute("customers", this.customerServices.findAll());
+        model.addAttribute("cars", this.carServices.findAll());
+        model.addAttribute("discounts", new ArrayList<BigDecimal>() {{
+            add(new BigDecimal(0.10));
+            add(new BigDecimal(0.20));
+            add(new BigDecimal(0.30));
+            add(new BigDecimal(0.40));
+            add(new BigDecimal(0.50));
+            add(new BigDecimal(0.60));
+            add(new BigDecimal(0.70));
+            add(new BigDecimal(0.80));
+            add(new BigDecimal(0.90));
+        }});
+
+        return "base-layout";
+    }
+
+    @PostMapping("/add")
+    public String addSaleProcess(AddSaleRequestModel saleRequestModel, RedirectAttributes model,
+                                 HttpServletRequest request) {
+        return "redirect:/Sales/review";
+    }
+
+    @GetMapping("/review")
+    public String reviewSale(Model model) {
+        model.addAttribute("view", "sale/add");
+
+        return "base-layout";
+    }
+
+    @PostMapping("/review")
+    public String reviewSaleProcess(AddSaleRequestModel saleRequestModel, RedirectAttributes model) {
+        this.saleServices.addSale(saleRequestModel, model);
+
+        return "redirect:/Sales/review";
     }
 
     @GetMapping("/{id}")

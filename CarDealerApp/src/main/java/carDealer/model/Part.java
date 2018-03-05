@@ -27,7 +27,7 @@ public class Part {
     @ManyToOne
     private Supplier supplier;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "parts_cars", joinColumns = {
             @JoinColumn(name = "part_id", nullable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "car_id", nullable = false)})

@@ -7,6 +7,9 @@ import java.util.Set;
  * Created by George-Lenovo on 03/03/2018.
  */
 public class CustomerResponseModel {
+
+    private Long id;
+
     private String name;
 
     private Date birthDate;
@@ -45,5 +48,13 @@ public class CustomerResponseModel {
 
     public void setSales(Set<SaleResponseModel> sales) {
         this.sales = sales;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
