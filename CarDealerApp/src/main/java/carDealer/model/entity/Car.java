@@ -1,4 +1,4 @@
-package carDealer.model;
+package carDealer.model.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -27,7 +27,10 @@ public class Car {
     @OneToOne(mappedBy = "car")
     private Sale sale;
 
-    @ManyToMany(mappedBy = "cars", cascade = CascadeType.ALL)
+    @ManyToMany()
+    @JoinTable(name = "parts_cars", joinColumns = {
+            @JoinColumn(name = "car_id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "part_id", nullable = false)})
     private Set<Part> parts;
 
     public Long getId() {

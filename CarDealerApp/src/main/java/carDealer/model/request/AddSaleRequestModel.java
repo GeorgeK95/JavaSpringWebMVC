@@ -1,39 +1,59 @@
 package carDealer.model.request;
 
-import java.math.BigDecimal;
+import carDealer.model.response.CustomerResponseModel;
 
 /**
  * Created by George-Lenovo on 03/05/2018.
  */
 public class AddSaleRequestModel {
+   /* private Long id;
 
-    private AddCustomerRequestModel customer;
+    private CarResponseModel car;*/
 
-    private AddCarRequestModel car;
 
-    private BigDecimal percentage;
+    private CustomerResponseModel customer;
 
-    public AddCustomerRequestModel getCustomer() {
+    public CustomerResponseModel getCustomer() {
         return customer;
     }
 
-    public void setCustomer(AddCustomerRequestModel customer) {
+    public void setCustomer(CustomerResponseModel customer) {
         this.customer = customer;
     }
 
-    public AddCarRequestModel getCar() {
+
+/*  private BigDecimal discount;
+
+    public CarResponseModel getCar() {
         return car;
     }
 
-    public void setCar(AddCarRequestModel car) {
+    public void setCar(CarResponseModel car) {
         this.car = car;
     }
 
-    public BigDecimal getPercentage() {
-        return percentage;
+    public Long getId() {
+        return id;
     }
 
-    public void setPercentage(BigDecimal percentage) {
-        this.percentage = percentage;
+    public void setId(Long id) {
+        this.id = id;
     }
+
+    public CustomerResponseModel getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerResponseModel customer) {
+        this.customer = customer;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+*/
 }

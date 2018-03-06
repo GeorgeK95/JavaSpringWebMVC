@@ -1,0 +1,34 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/cars/reviw}" method="post">
+                <fieldset>
+                    <legend class="text-center">Review Sale</legend>
+
+                    <!--<div class="form-group">
+                        <label class="col-sm-4 control-label" for="username">Customer</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="username" placeholder="Username" name="username"
+                                   disabled="disabled" th:text="${car.}"/>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="carInfo">Car</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="carInfo" disabled="disabled" name="password"
+                                   th:text="|${car.getMake()} ${car.getModel()}|"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/cars/add}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Finalize</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

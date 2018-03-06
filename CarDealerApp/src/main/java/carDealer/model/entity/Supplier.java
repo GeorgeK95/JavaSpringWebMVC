@@ -1,4 +1,4 @@
-package carDealer.model;
+package carDealer.model.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,7 +18,7 @@ public class Supplier {
     private String name;
 
     @Column(nullable = false)
-    private boolean isImported;
+    private boolean isImporter;
 
     @OneToMany(mappedBy = "supplier")
     private Set<Part> parts;
@@ -39,12 +39,12 @@ public class Supplier {
         this.name = name;
     }
 
-    public boolean isImported() {
-        return isImported;
+    public boolean isImporter() {
+        return isImporter;
     }
 
-    public void setImported(boolean imported) {
-        isImported = imported;
+    public void setImporter(boolean importer) {
+        isImporter = importer;
     }
 
     public Set<Part> getParts() {

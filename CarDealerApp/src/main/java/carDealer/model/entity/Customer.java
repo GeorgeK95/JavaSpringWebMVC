@@ -1,4 +1,4 @@
-package carDealer.model;
+package carDealer.model.entity;
 
 import javax.persistence.*;
 import java.util.Date;

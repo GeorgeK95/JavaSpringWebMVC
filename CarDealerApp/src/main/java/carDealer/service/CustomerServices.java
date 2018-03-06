@@ -1,6 +1,6 @@
 package carDealer.service;
 
-import carDealer.model.Customer;
+import carDealer.model.entity.Customer;
 import carDealer.model.request.AddCustomerRequestModel;
 import carDealer.model.response.CarResponseModel;
 import carDealer.model.response.CustomerResponseModel;

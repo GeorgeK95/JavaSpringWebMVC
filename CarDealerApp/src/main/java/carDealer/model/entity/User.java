@@ -1,6 +1,10 @@
-package carDealer.model;
+package carDealer.model.entity;
+
+import carDealer.test.Role;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by George-Lenovo on 03/04/2018.
@@ -22,11 +26,37 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles")
+    private Set<Role> roles;
+
     public User() {
+        this.roles = new HashSet<>();
     }
 
     public User(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    @Transient
+    public boolean isAdmin() {
+        return this.getRoles()
+                .stream()
+                .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
     }
 
     public Long getId() {

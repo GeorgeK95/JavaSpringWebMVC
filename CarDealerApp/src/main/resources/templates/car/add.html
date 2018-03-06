@@ -40,12 +40,14 @@
                         <label class="col-sm-4 control-label" for="dropDownBtn"></label>
 
                         <div class="col-sm-4">
-                            <button id="dropDownBtn" type="button" class="btn btn-default dropdown-toggle"
+                            <button id="dropDownBtn" type="button" class="form-control dropdown-toggle"
                                     data-toggle="dropdown">
                                 <!--<span class="glyphicon glyphicon-cog"></span>-->
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-
+                                <div align="right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu scrollable-menu">
 
                                 <th:block th:each="part : ${parts}" th:object="${part}">
 
@@ -53,7 +55,7 @@
                                         <li>
                                             <a href="#" class="small" th:value="${part.getId()}"
                                                tabIndex="-1">
-                                                <input name="parts" type="checkbox"
+                                                <input name="selectedParts" type="checkbox"
                                                        th:value="${part.getId()}"
                                                        th:text="|&nbsp; ${part.getName()}|"/>
                                             </a>

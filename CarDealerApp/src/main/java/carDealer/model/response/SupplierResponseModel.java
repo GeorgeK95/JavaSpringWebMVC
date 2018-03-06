@@ -1,6 +1,6 @@
 package carDealer.model.response;
 
-import carDealer.model.Part;
+import carDealer.model.entity.Part;
 
 import java.util.Set;
 

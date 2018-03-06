@@ -11,23 +11,40 @@
                         </div>
                     </th:block>-->
 
-                    <select id="customerDropDownBtn" class="form-control" name="customer">
-                        <option th:each="customer : ${customers}"
-                                th:value="${customer}"
-                                th:text="${customer.getName()}"></option>
-                    </select>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="customerDropDownBtn">Customer</label>
+                        <div class="col-sm-4">
+                            <select name="optionBe" id="customerDropDownBtn" class="form-control">
+                                <option disabled selected value> -- Select Customer --</option>
+                                <option th:each="customer : ${customers}"
+                                        th:text="${customer}"></option>
+                            </select>
+                        </div>
+                    </div>
 
-                    <select id="partDropDownBtn" class="form-control" name="car">
-                        <option th:each="car : ${cars}"
-                                th:value="${car}"
-                                th:text="|${car.getMake()} ${car.getModel()}|"></option>
-                    </select>
+                    <!--<div class="form-group">
+                         <label class="col-sm-4 control-label" for="partDropDownBtn">Car</label>
+                         <div class="col-sm-4">
+                             <select id="partDropDownBtn" class="form-control" name="car">
+                                 <option disabled selected value> &#45;&#45; Select Car &#45;&#45;</option>
+                                 <option th:each="car : ${cars}"
+                                         th:value="${car}"
+                                         th:text="|${car.getMake()} ${car.getModel()}|"></option>
+                             </select>
+                         </div>
+                     </div>
 
-                    <select id="carDropDownBtn" class="form-control" name="percentage">
-                        <option th:each="discount : ${discounts}"
-                                th:value="${discount}"
-                                th:text="${discount}"></option>
-                    </select>
+                     <div class="form-group">
+                         <label class="col-sm-4 control-label" for="discountDropDownBtn">Discount</label>
+                         <div class="col-sm-4">
+                             <select id="discountDropDownBtn" class="form-control" name="percentage">
+                                 <option disabled selected value> &#45;&#45; Select Discount &#45;&#45;</option>
+                                 <option th:each="discount : ${discounts}"
+                                         th:value="${discount}"
+                                         th:text="${discount}"></option>
+                             </select>
+                         </div>
+                     </div>-->
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
@@ -35,6 +52,7 @@
                             <input value="Add" type="submit" class="btn btn-primary"/>
                         </div>
                     </div>
+
                 </fieldset>
             </form>
         </div>

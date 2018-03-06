@@ -45,4 +45,21 @@ public class UserController {
         return "base-layout";
     }
 
+
+   /* @PostMapping("/login")
+    public String login(HttpServletRequest request, AddUserRequestModel loginModel,
+                        RedirectAttributes attributes) {
+        User user = this.userServices.findByUsername(loginModel.getUsername());
+
+        if (user == null || !user.getPassword().equals(loginModel.getPassword())) {
+            attributes.addAttribute("login_failed", "Invalid username or password.");
+            return "redirect:/login";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute(LOGIN_MODEL, loginModel);
+
+        return "redirect:/cars/all";
+    }*/
+
 }

@@ -6,6 +6,7 @@ import carDealer.model.response.PartResponseModel;
 import carDealer.service.CarServices;
 import carDealer.service.PartServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +68,7 @@ public class CarController {
 
 
     @GetMapping("add")
+    @PreAuthorize("isAuthenticated()")
     public String addCar(Model model) {
         model.addAttribute("view", "car/add");
         model.addAttribute("parts", this.partServices.findAll());
@@ -75,6 +77,7 @@ public class CarController {
     }
 
     @PostMapping("add")
+    @PreAuthorize("isAuthenticated()")
     public String addCarProcess(RedirectAttributes model, AddCarRequestModel carRequestModel) {
         this.carServices.addCar(carRequestModel, model);
 

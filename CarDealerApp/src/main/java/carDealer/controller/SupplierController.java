@@ -17,16 +17,16 @@ import java.util.List;
 @RequestMapping("/suppliers/")
 public class SupplierController {
 
-    private final SupplierServices services;
+    private final SupplierServices supplierServices;
 
     @Autowired
     public SupplierController(SupplierServices services) {
-        this.services = services;
+        this.supplierServices = services;
     }
 
     @GetMapping("local")
     public String local(Model model) {
-        List<SupplierResponseModel> allByIsImportedTrue = this.services.filterLocalSuppliers();
+        List<SupplierResponseModel> allByIsImportedTrue = this.supplierServices.filterLocalSuppliers();
 
         model.addAttribute("suppliers", allByIsImportedTrue);
         model.addAttribute("view", "supplier/suppliersTable");
@@ -36,9 +36,19 @@ public class SupplierController {
 
     @GetMapping("importers")
     public String importers(Model model) {
-        List<SupplierResponseModel> allByIsImportedFalse = this.services.filterImportersSuppliers();
+        List<SupplierResponseModel> allByIsImportedFalse = this.supplierServices.filterImportersSuppliers();
 
         model.addAttribute("suppliers", allByIsImportedFalse);
+        model.addAttribute("view", "supplier/suppliersTable");
+
+        return "base-layout";
+    }
+
+    @GetMapping("all")
+    public String allSuppliers(Model model) {
+        List<SupplierResponseModel> allSuppliers = this.supplierServices.findAll();
+
+        model.addAttribute("suppliers", allSuppliers);
         model.addAttribute("view", "supplier/suppliersTable");
 
         return "base-layout";

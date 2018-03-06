@@ -1,6 +1,6 @@
 package carDealer.repository;
 
-import carDealer.model.Supplier;
+import carDealer.model.entity.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Repository
 public interface SuppliersRepository extends JpaRepository<Supplier, Long> {
-    List<Supplier> findAllByIsImportedTrue();
+    List<Supplier> findAllByIsImporterTrue();
 
-    List<Supplier> findAllByIsImportedFalse();
+    List<Supplier> findAllByIsImporterFalse();
 }

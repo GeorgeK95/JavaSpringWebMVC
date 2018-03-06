@@ -1,6 +1,6 @@
 package carDealer.repository;
 
-import carDealer.model.Part;
+import carDealer.model.entity.Part;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

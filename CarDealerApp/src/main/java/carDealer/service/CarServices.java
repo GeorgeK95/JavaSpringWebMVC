@@ -1,7 +1,7 @@
 package carDealer.service;
 
-import carDealer.model.Car;
-import carDealer.model.Part;
+import carDealer.model.entity.Car;
+import carDealer.model.entity.Part;
 import carDealer.model.request.AddCarRequestModel;
 import carDealer.model.response.CarResponseModel;
 import carDealer.repository.CarsRepository;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,12 +55,12 @@ public class CarServices {
         this.setNotification(car, model, "car_add_notification");
 
         this.repository.saveAndFlush(car);
-
+/*
         carParts.forEach(cp -> cp.setCars(new HashSet<Car>(cp.getCars()) {{
             add(car);
         }}));
 
-        this.partRepository.save(carParts);
+        this.partRepository.save(carParts);*/
     }
 
     private void setNotification(Car car, RedirectAttributes model, String key) {

@@ -23,11 +23,11 @@ public class SupplierServices {
     }
 
     public List<SupplierResponseModel> filterLocalSuppliers() {
-        return DTOConvertUtil.convert(this.repository.findAllByIsImportedTrue(), SupplierResponseModel.class);
+        return DTOConvertUtil.convert(this.repository.findAllByIsImporterTrue(), SupplierResponseModel.class);
     }
 
     public List<SupplierResponseModel> filterImportersSuppliers() {
-        return DTOConvertUtil.convert(this.repository.findAllByIsImportedFalse(), SupplierResponseModel.class);
+        return DTOConvertUtil.convert(this.repository.findAllByIsImporterFalse(), SupplierResponseModel.class);
     }
 
     public List<SupplierResponseModel> findAll() {

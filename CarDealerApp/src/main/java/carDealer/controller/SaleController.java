@@ -56,16 +56,16 @@ public class SaleController {
         model.addAttribute("view", "sale/add");
         model.addAttribute("customers", this.customerServices.findAll());
         model.addAttribute("cars", this.carServices.findAll());
-        model.addAttribute("discounts", new ArrayList<BigDecimal>() {{
-            add(new BigDecimal(0.10));
-            add(new BigDecimal(0.20));
-            add(new BigDecimal(0.30));
-            add(new BigDecimal(0.40));
-            add(new BigDecimal(0.50));
-            add(new BigDecimal(0.60));
-            add(new BigDecimal(0.70));
-            add(new BigDecimal(0.80));
-            add(new BigDecimal(0.90));
+        model.addAttribute("discounts", new ArrayList<Double>() {{
+            add(new Double(0.10));
+            add(new Double(0.20));
+            add(new Double(0.30));
+            add(new Double(0.40));
+            add(new Double(0.50));
+            add(new Double(0.60));
+            add(new Double(0.70));
+            add(new Double(0.80));
+            add(new Double(0.90));
         }});
 
         return "base-layout";
@@ -78,8 +78,9 @@ public class SaleController {
     }
 
     @GetMapping("/review")
-    public String reviewSale(Model model) {
-        model.addAttribute("view", "sale/add");
+    public String reviewSale(Model model, AddSaleRequestModel saleRequestModel) {
+        model.addAttribute("view", "sale/review");
+        model.addAttribute("sale", saleRequestModel);
 
         return "base-layout";
     }
