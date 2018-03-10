@@ -2,7 +2,7 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Car Dealer</a>
+                <a class="navbar-brand" href="/">Car Dealer</a>
             </div>
             <ul class="nav navbar-nav">
 
@@ -39,9 +39,22 @@
                         <li><a href="/cars/add">Add</a></li>
                     </ul>
                 </li>
+
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Parts<span
+                        class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/parts/all">All</a></li>
+                        <li><a href="/parts/add">Add</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/logs/all}">
+                        Logs
+                    </a>
+                </li>
                 <li sec:authorize="isAnonymous()">
                     <a th:href="@{/register}">
                         Register

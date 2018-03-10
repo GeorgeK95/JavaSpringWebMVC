@@ -13,6 +13,8 @@ public class SupplierResponseModel {
 
     private String name;
 
+    private Boolean isImporter;
+
     private Set<Part> parts;
 
     public Long getId() {
@@ -21,6 +23,14 @@ public class SupplierResponseModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean isImporter() {
+        return isImporter;
+    }
+
+    public void setImporter(Boolean importer) {
+        isImporter = importer;
     }
 
     public String getName() {

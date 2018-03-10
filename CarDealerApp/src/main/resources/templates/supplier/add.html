@@ -1,0 +1,43 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/suppliers/add}" method="post">
+                <fieldset>
+                    <legend class="text-center">Add Supplier</legend>
+
+                    <th:block th:unless="${supplier_added} == null">
+                        <div class="alert alert-success text-center">
+                            <strong th:text="${supplier_added}"></strong>
+                        </div>
+                    </th:block>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="suppName">Supplier Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="suppName" placeholder="Supplier Name"
+                                   name="supplierName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="importerCheck"></label>
+
+                        <div class="col-sm-4">
+                            <input type="checkbox" class="form-check-input" id="importerCheck"
+                                   name="isImporter">
+                            <label class="form-check-label" for="importerCheck">Is Importer</label></div>
+                    </div>
+
+                    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/suppliers/all}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

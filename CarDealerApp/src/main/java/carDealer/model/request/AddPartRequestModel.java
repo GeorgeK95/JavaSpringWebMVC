@@ -1,5 +1,7 @@
 package carDealer.model.request;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +13,7 @@ public class AddPartRequestModel {
 
     private BigDecimal price;
 
-    private long quantity = 1;
+    private Long quantity;
 
     private long supplierId;
 
@@ -23,11 +25,11 @@ public class AddPartRequestModel {
         this.supplierId = supplierId;
     }
 
-    public long getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

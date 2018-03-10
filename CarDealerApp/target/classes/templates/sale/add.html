@@ -5,46 +5,41 @@
                 <fieldset>
                     <legend class="text-center">Add Sale</legend>
 
-                    <!--<th:block th:unless="${car_add_notification} == null">
-                        <div class="alert alert-success text-center">
-                            <strong th:text="${car_add_notification}"></strong>
-                        </div>
-                    </th:block>-->
-
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="customerDropDownBtn">Customer</label>
                         <div class="col-sm-4">
-                            <select name="optionBe" id="customerDropDownBtn" class="form-control">
+                            <select id="customerDropDownBtn" class="form-control" name="customerId">
                                 <option disabled selected value> -- Select Customer --</option>
                                 <option th:each="customer : ${customers}"
-                                        th:text="${customer}"></option>
+                                        th:value="${customer.getId()}"
+                                        th:text="${customer.getName()}"></option>
                             </select>
                         </div>
                     </div>
 
-                    <!--<div class="form-group">
-                         <label class="col-sm-4 control-label" for="partDropDownBtn">Car</label>
-                         <div class="col-sm-4">
-                             <select id="partDropDownBtn" class="form-control" name="car">
-                                 <option disabled selected value> &#45;&#45; Select Car &#45;&#45;</option>
-                                 <option th:each="car : ${cars}"
-                                         th:value="${car}"
-                                         th:text="|${car.getMake()} ${car.getModel()}|"></option>
-                             </select>
-                         </div>
-                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="partDropDownBtn">Car</label>
+                        <div class="col-sm-4">
+                            <select id="partDropDownBtn" class="form-control" name="carId">
+                                <option disabled selected value> -- Select Car --</option>
+                                <option th:each="car : ${cars}"
+                                        th:value="${car.getId()}"
+                                        th:text="|${car.getMake()} ${car.getModel()}|"></option>
+                            </select>
+                        </div>
+                    </div>
 
-                     <div class="form-group">
-                         <label class="col-sm-4 control-label" for="discountDropDownBtn">Discount</label>
-                         <div class="col-sm-4">
-                             <select id="discountDropDownBtn" class="form-control" name="percentage">
-                                 <option disabled selected value> &#45;&#45; Select Discount &#45;&#45;</option>
-                                 <option th:each="discount : ${discounts}"
-                                         th:value="${discount}"
-                                         th:text="${discount}"></option>
-                             </select>
-                         </div>
-                     </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discountDropDownBtn">Discount</label>
+                        <div class="col-sm-4">
+                            <select id="discountDropDownBtn" class="form-control" name="discount">
+                                <option disabled selected value> -- Select Discount --</option>
+                                <option th:each="discount : ${discounts}"
+                                        th:value="${discount}"
+                                        th:text="${discount}"></option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">

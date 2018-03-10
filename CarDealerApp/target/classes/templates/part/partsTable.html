@@ -7,7 +7,7 @@
             <th>Name</th>
             <th>Price</th>
 
-            <th:block th:if="${action} != null">
+            <th:block th:if="${editDelete} != null">
                 <th>Action</th>
             </th:block>
         </tr>
@@ -18,13 +18,11 @@
                     <td th:text="*{name}"></td>
                     <td th:text="*{price}"></td>
 
-                    <th:block th:if="${action} != null" th:switch="${action}">
-                        <th:block th:case="'delete'">
-                            <td><a th:href="@{/parts/delete/{id}(id=${part.getId()})}">Delete</a></td>
-                        </th:block>
-                        <th:block th:case="'edit'">
-                            <td><a th:href="@{/parts/edit/{id}(id=${part.getId()})}">Edit</a></td>
-                        </th:block>
+                    <th:block th:if="${editDelete} != null">
+                        <td>
+                            <a th:href="@{/parts/edit/{id}(id=${part.getId()})}">Edit</a>
+                            <a th:href="@{/parts/delete/{id}(id=${part.getId()})}">Delete</a>
+                        </td>
                     </th:block>
 
                 </tr>

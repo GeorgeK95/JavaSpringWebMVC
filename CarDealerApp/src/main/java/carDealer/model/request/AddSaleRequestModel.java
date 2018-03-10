@@ -1,51 +1,34 @@
 package carDealer.model.request;
 
-import carDealer.model.response.CustomerResponseModel;
+import carDealer.model.entity.Customer;
+
+import java.math.BigDecimal;
 
 /**
  * Created by George-Lenovo on 03/05/2018.
  */
 public class AddSaleRequestModel {
-   /* private Long id;
 
-    private CarResponseModel car;*/
+    private Long customerId;
 
+    private Long carId;
 
-    private CustomerResponseModel customer;
+    private BigDecimal discount;
 
-    public CustomerResponseModel getCustomer() {
-        return customer;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(CustomerResponseModel customer) {
-        this.customer = customer;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-
-/*  private BigDecimal discount;
-
-    public CarResponseModel getCar() {
-        return car;
+    public Long getCarId() {
+        return carId;
     }
 
-    public void setCar(CarResponseModel car) {
-        this.car = car;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public CustomerResponseModel getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerResponseModel customer) {
-        this.customer = customer;
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public BigDecimal getDiscount() {
@@ -55,5 +38,4 @@ public class AddSaleRequestModel {
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
-*/
 }

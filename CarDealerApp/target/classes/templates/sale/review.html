@@ -1,25 +1,33 @@
 <main>
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" th:action="@{/cars/reviw}" method="post">
+            <form class="form-horizontal" th:action="@{/Sales/review}" method="post">
                 <fieldset>
                     <legend class="text-center">Review Sale</legend>
 
-                    <!--<div class="form-group">
-                        <label class="col-sm-4 control-label" for="username">Customer</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="username" placeholder="Username" name="username"
-                                   disabled="disabled" th:text="${car.}"/>
-                        </div>
-                    </div>-->
-
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="carInfo">Car</label>
+                        <label class="col-sm-4 control-label" for="customer">Customer</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="carInfo" disabled="disabled" name="password"
-                                   th:text="|${car.getMake()} ${car.getModel()}|"/>
+                            <input type="text" class="form-control" id="customer" disabled="disabled"
+                                   name="customer" th:field="${customer.getName()}"/>
                         </div>
                     </div>
+
+                    <!--<div class="form-group">
+                        <label class="col-sm-4 control-label" for="carInfo">Car</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="carInfo" disabled="disabled"
+                                   th:field="|${car.getMake()} ${car.getModel()}|"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="discountInfo">Discount</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="discountInfo" disabled="disabled"
+                                   th:field="${discount}"/>
+                        </div>
+                    </div>-->
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">

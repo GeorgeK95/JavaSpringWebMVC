@@ -1,0 +1,32 @@
+<main>
+    <form class="form-inline my-2 my-lg-0"  th:action="@{/logs/search}" method="POST">
+        <input class="form-control mr-sm-2" type="text" placeholder="Username..." name="username">
+
+        <input class="btn btn-primary btn-lg" style="margin-left:10px" value="Search Logs" type="submit"
+               name="search"/>
+        <a href="/logs/clearAll" class="btn btn-warning btn-lg pull-right">Clear All Logs</a>
+    </form>
+
+    <table class="modifiedTable" style="margin-top: 20px">
+        <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Operation</th>
+            <th scope="col">Modified Table</th>
+            <th scope="col">Time</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <th:block th:each="log : ${logs}" th:object="${log}">
+            <tr>
+                <td th:text="${log.getUser().getUsername()}"></td>
+                <td th:text="${log.getOperation()}"></td>
+                <td th:text="${#strings.capitalize(log.getModifiedTable())}"></td>
+                <td th:text="${#dates.format(log.getDate(), 'd MMM yyyy hh:mm:ss')}"></td>
+            </tr>
+        </th:block>
+
+        </tbody>
+    </table>
+</main>

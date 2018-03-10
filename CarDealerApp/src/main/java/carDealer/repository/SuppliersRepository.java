@@ -14,4 +14,5 @@ public interface SuppliersRepository extends JpaRepository<Supplier, Long> {
     List<Supplier> findAllByIsImporterTrue();
 
     List<Supplier> findAllByIsImporterFalse();
+
 }

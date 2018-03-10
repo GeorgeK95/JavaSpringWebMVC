@@ -1,0 +1,52 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/suppliers/edit/{id}(id=${supplier.getId()})}" method="post">
+                <fieldset>
+                    <legend class="text-center">Edit Supplier</legend>
+
+                    <!--<th:block th:unless="${supplier_added} == null">
+                        <div class="alert alert-success text-center">
+                            <strong th:text="${supplier_added}"></strong>
+                        </div>
+                    </th:block>-->
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="suppName">Supplier Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="suppName" th:value="${supplier.getName()}"
+                                   name="supplierName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="checkBoxDiv"></label>
+
+                        <div class="col-sm-4" id="checkBoxDiv">
+
+                            <th:block th:if="${supplier.isImporter()}==true">
+                                <input type="checkbox" class="form-check-input" id="importerCheckTrue"
+                                       checked name="isImporter">
+                            </th:block>
+                            <th:block th:unless="${supplier.isImporter()}==true">
+                                <input type="checkbox" class="form-check-input" id="importerCheckFalse"
+                                       name="isImporter">
+                            </th:block>
+
+                            <label class="form-check-label" for="checkBoxDiv">Is Importer</label></div>
+
+                    </div>
+
+                    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/suppliers/all}">Cancel</a>
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

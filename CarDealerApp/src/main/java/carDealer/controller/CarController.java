@@ -1,20 +1,25 @@
 package carDealer.controller;
 
+import carDealer.annotations.LoggedAction;
+import carDealer.model.enums.Operation;
+import carDealer.model.enums.TableEnum;
 import carDealer.model.request.AddCarRequestModel;
 import carDealer.model.response.CarResponseModel;
 import carDealer.model.response.PartResponseModel;
 import carDealer.service.CarServices;
+import carDealer.service.LoggerService;
 import carDealer.service.PartServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +61,7 @@ public class CarController {
 
     @GetMapping("{id}/parts")
     public String carsWithParts(@PathVariable Long id, Model model) {
-        CarResponseModel car = this.carServices.findById(id);
+        CarResponseModel car = this.carServices.findOne(id);
         List<PartResponseModel> partsByCarId = this.partServices.getPartsByCarId(id);
 
         model.addAttribute("car", car);
@@ -68,7 +73,7 @@ public class CarController {
 
 
     @GetMapping("add")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public String addCar(Model model) {
         model.addAttribute("view", "car/add");
         model.addAttribute("parts", this.partServices.findAll());
@@ -77,10 +82,16 @@ public class CarController {
     }
 
     @PostMapping("add")
-    @PreAuthorize("isAuthenticated()")
-    public String addCarProcess(RedirectAttributes model, AddCarRequestModel carRequestModel) {
+    @LoggedAction
+//    @PreAuthorize("isAuthenticated()")
+    public ModelAndView addCarProcess(RedirectAttributes model, AddCarRequestModel carRequestModel) {
         this.carServices.addCar(carRequestModel, model);
 
-        return "redirect:/cars/add";
+        return LoggerService.constructModelAndView(
+                "redirect:/cars/add",
+                "someUser: TOBEDONE",
+                Operation.ADD.toString(),
+                TableEnum.CAR.toString()
+        );
     }
 }

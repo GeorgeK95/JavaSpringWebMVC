@@ -8,6 +8,8 @@ import java.util.Set;
  */
 public class CarResponseModel {
 
+    private Long id;
+
     private String make;
 
     private String model;
@@ -17,6 +19,14 @@ public class CarResponseModel {
     private SaleResponseModel sale;
 
     private Set<PartResponseModel> parts;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getMake() {
         return make;

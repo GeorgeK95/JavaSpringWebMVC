@@ -35,7 +35,7 @@ public class CarServices {
         return DTOConvertUtil.convert(this.repository.carsFromMake(make), CarResponseModel.class);
     }
 
-    public CarResponseModel findById(Long id) {
+    public CarResponseModel findOne(Long id) {
         Car one = this.repository.findOne(id);
         return DTOConvertUtil.convert(one, CarResponseModel.class);
     }
@@ -55,12 +55,6 @@ public class CarServices {
         this.setNotification(car, model, "car_add_notification");
 
         this.repository.saveAndFlush(car);
-/*
-        carParts.forEach(cp -> cp.setCars(new HashSet<Car>(cp.getCars()) {{
-            add(car);
-        }}));
-
-        this.partRepository.save(carParts);*/
     }
 
     private void setNotification(Car car, RedirectAttributes model, String key) {

@@ -41,6 +41,8 @@ public class PartServices {
     public void addPart(AddPartRequestModel requestModel, RedirectAttributes model) {
         Part part = DTOConvertUtil.convert(requestModel, Part.class);
         part.setId(null);
+        if (requestModel.getQuantity() == null) part.setQuantity(1L);
+
 
         this.repository.saveAndFlush(part);
 

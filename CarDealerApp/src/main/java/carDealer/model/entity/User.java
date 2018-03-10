@@ -1,7 +1,5 @@
 package carDealer.model.entity;
 
-import carDealer.test.Role;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +27,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles")
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Logger> logs;
 
     public User() {
         this.roles = new HashSet<>();
@@ -89,5 +90,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Logger> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(Set<Logger> logs) {
+        this.logs = logs;
     }
 }

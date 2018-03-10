@@ -1,17 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:include="fragments/head" th:with="pageTitle='Car Dealer'"></head>
+<head th:replace="fragments/head" th:with="pageTitle='Car Dealer'"></head>
 
 <body>
 
-<header th:include="fragments/header"></header>
+<header th:replace="fragments/header"></header>
 
-<main th:include="${view}"></main>
+<main th:replace="${view}"></main>
 
-<footer th:include="fragments/footer"></footer>
+<footer th:replace="fragments/footer"></footer>
 
-<span th:include="fragments/scripts-bundle"></span>
+<span th:replace="fragments/scripts-bundle"></span>
 
 </body>
 </html>
