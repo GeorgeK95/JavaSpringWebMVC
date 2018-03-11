@@ -1,0 +1,15 @@
+.navbar-darkRed {
+    background-color: #960C4E;
+}
+
+.nav-item-white {
+    color: white;
+}
+
+div > #divWell {
+    margin-top: 20px
+}
+
+fieldset > #addVirusForm {
+    margin-top: 20px
+}
