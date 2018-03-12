@@ -1,6 +1,5 @@
 package carDealer.model.request;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ public class AddCarRequestModel {
 
     private String model;
 
-    private BigDecimal travelledDistance;
+    private Double travelledDistance;
 
     private List<Long> selectedParts;
 
@@ -40,11 +39,11 @@ public class AddCarRequestModel {
         this.model = model;
     }
 
-    public BigDecimal getTravelledDistance() {
+    public Double getTravelledDistance() {
         return travelledDistance;
     }
 
-    public void setTravelledDistance(BigDecimal travelledDistance) {
+    public void setTravelledDistance(Double travelledDistance) {
         this.travelledDistance = travelledDistance;
     }
 }

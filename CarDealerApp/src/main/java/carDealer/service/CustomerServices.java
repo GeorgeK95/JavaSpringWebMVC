@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -48,19 +47,19 @@ public class CustomerServices {
         return DTOConvertUtil.convert(this.repository.orderedDescendingCustomers(), CustomerResponseModel.class);
     }
 
-    public BigDecimal getTotalMoneySpentForCars(List<SaleResponseModel> totalSalesByCustomer) {
-        BigDecimal money = new BigDecimal(0);
+    public Double getTotalMoneySpentForCars(List<SaleResponseModel> totalSalesByCustomer) {
+        Double money = new Double(0);
         for (SaleResponseModel saleResponseModel : totalSalesByCustomer) {
             CarResponseModel car = saleResponseModel.getCar();
             for (PartResponseModel partResponseModel : car.getParts()) {
-                money = money.add(partResponseModel.getPrice());
+                money = money+partResponseModel.getPrice();
             }
         }
         return money;
     }
 
-    public CustomerResponseModel findOne(Long id) {
-        return DTOConvertUtil.convert(this.repository.findOne(id), CustomerResponseModel.class);
+    public <T> T findOne(Long id, Class<T> clazz) {
+        return DTOConvertUtil.convert(this.repository.findOne(id), clazz);
     }
 
     public void add(AddCustomerRequestModel customerRequestModel, RedirectAttributes model) {

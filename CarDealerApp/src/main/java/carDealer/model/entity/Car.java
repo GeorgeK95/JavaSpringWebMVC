@@ -1,7 +1,6 @@
 package carDealer.model.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -22,9 +21,9 @@ public class Car {
     private String model;
 
     @Column(precision = 20, nullable = false)
-    private BigDecimal travelledDistance;
+    private Double travelledDistance;
 
-    @OneToOne(mappedBy = "car")
+    @ManyToOne
     private Sale sale;
 
     @ManyToMany()
@@ -57,11 +56,11 @@ public class Car {
         this.model = model;
     }
 
-    public BigDecimal getTravelledDistance() {
+    public Double getTravelledDistance() {
         return travelledDistance;
     }
 
-    public void setTravelledDistance(BigDecimal travelledDistance) {
+    public void setTravelledDistance(Double travelledDistance) {
         this.travelledDistance = travelledDistance;
     }
 

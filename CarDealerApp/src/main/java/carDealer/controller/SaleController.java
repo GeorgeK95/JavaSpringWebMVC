@@ -1,12 +1,12 @@
 package carDealer.controller;
 
 import carDealer.annotations.LoggedAction;
+import carDealer.model.entity.Part;
 import carDealer.model.enums.Operation;
 import carDealer.model.enums.TableEnum;
-import carDealer.model.request.AddSaleRequestModel;
-import carDealer.model.response.CarResponseModel;
-import carDealer.model.response.CustomerResponseModel;
-import carDealer.model.response.SaleResponseModel;
+import carDealer.model.request.AddSaleReviewRequestModel;
+import carDealer.model.response.*;
+import carDealer.repository.PartRepository;
 import carDealer.service.CarServices;
 import carDealer.service.CustomerServices;
 import carDealer.service.LoggerService;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by George-Lenovo on 03/03/2018.
@@ -31,19 +31,20 @@ public class SaleController {
 
     public static final int YOUNG_DRIVER_DISCOUNT_PERCENTAGE = 5;
 
-    private Map<String, Object> cachedData;
-
     private final SaleServices saleServices;
 
     private final CarServices carServices;
 
     private final CustomerServices customerServices;
 
+    private final PartRepository partRepository;
+
     @Autowired
-    public SaleController(SaleServices saleServices, CarServices carServices, CustomerServices customerServices) {
+    public SaleController(SaleServices saleServices, CarServices carServices, CustomerServices customerServices, PartRepository partRepository) {
         this.saleServices = saleServices;
         this.carServices = carServices;
         this.customerServices = customerServices;
+        this.partRepository = partRepository;
     }
 
     @GetMapping("")
@@ -70,31 +71,24 @@ public class SaleController {
 
     @PostMapping("/add")
     @LoggedAction
-    public ModelAndView addSaleProcess(@ModelAttribute AddSaleRequestModel saleRequestModel, RedirectAttributes model,
-                                       HttpServletRequest request) {
-//        model.addFlashAttribute("saleRequestModel", saleRequestModel);
+    public ModelAndView addSaleProcess(@RequestParam Long carId,
+                                       @RequestParam Long customerId,
+                                       @RequestParam Double discount,
+                                       RedirectAttributes redirectAttributes) {
 
-        CarResponseModel car = this.carServices.findOne(saleRequestModel.getCarId());
-        CustomerResponseModel customer = this.customerServices.findOne(saleRequestModel.getCustomerId());
-        model.addFlashAttribute("customer", customer);
+        CarBasicInfoResponseModel car = this.carServices.findOne(carId, CarBasicInfoResponseModel.class);
+        Double totalCarPrice = this.partRepository.findCarPartsById(carId).stream().mapToDouble(Part::getPrice).sum();
+        car.setPrice(totalCarPrice);
+        car.setFinalCarPrice(totalCarPrice - (totalCarPrice * discount));
 
-        /*this.cachedData = new HashMap<>();
-        this.cachedData.put("customer", customer);
-        this.cachedData.put("car", car);*/
+        CustomerBasicInfoResponseModel customer = this.customerServices.findOne(customerId, CustomerBasicInfoResponseModel.class);
 
-        /*model.addFlashAttribute("customerName", customer.getName());
-        model.addFlashAttribute("carName", car.getMake() + " " + car.getModel());
-        model.addFlashAttribute("discount", saleRequestModel.getDiscount());*/
+        SaleInfoResponseModel saleInfoResponseModel = new SaleInfoResponseModel();
+        saleInfoResponseModel.setCar(car);
+        saleInfoResponseModel.setCustomer(customer);
+        saleInfoResponseModel.setDiscount(discount);
 
-        /*BigDecimal discount = saleRequestModel.getDiscount();
-        String discountMessage = "";
-        if (customer.isYoungDriver()) {
-            discount = discount.add(new BigDecimal(YOUNG_DRIVER_DISCOUNT_PERCENTAGE));
-            discountMessage = String.format(" (+%s%)", String.valueOf(YOUNG_DRIVER_DISCOUNT_PERCENTAGE));
-        }
-
-        model.addAttribute("discountStringValue", discount.toString().concat("%")
-                .concat(discountMessage));*/
+        redirectAttributes.addFlashAttribute("sale", saleInfoResponseModel);
 
         return LoggerService.constructModelAndView(
                 "redirect:/Sales/review",
@@ -106,26 +100,25 @@ public class SaleController {
 
     @GetMapping("/review")
     public String reviewSale(Model model) {
-        Map<String, Object> stringObjectMap = model.asMap();
-
         model.addAttribute("view", "sale/review");
-        model.addAllAttributes(stringObjectMap);
+
+        SaleInfoResponseModel saleInfoResponseModel = this.saleServices.constructSaleInfoResponseModelObject(model);
+
+        model.addAttribute("sale", saleInfoResponseModel);
 
         return "base-layout";
     }
 
     @PostMapping("/review")
-    public String reviewSaleProcess(/*AddSaleRequestModel saleRequestModel,*/
-                                    RedirectAttributes model,
-                                    HttpServletRequest request) {
-        this.saleServices.addSale(null, model);
+    public String reviewSaleProcess(@ModelAttribute AddSaleReviewRequestModel addSaleReviewRequestModel) {
+        this.saleServices.addSale(addSaleReviewRequestModel);
 
         return "redirect:/Sales/review";
     }
 
     @GetMapping("/{id}")
     public String saleById(@PathVariable Long id, Model model) {
-        CarResponseModel carById = this.carServices.findOne(id);
+        CarResponseModel carById = this.carServices.findOne(id, CarResponseModel.class);
         String customerName = carById.getSale().getCustomer().getName();
 
         model.addAttribute("customerName", customerName);
@@ -151,9 +144,9 @@ public class SaleController {
     }
 
     @GetMapping("/discounted/{percent}")
-    public String discountedByPercent(@PathVariable BigDecimal percent, Model model) {
+    public String discountedByPercent(@PathVariable Double percent, Model model) {
         List<SaleResponseModel> allSales = this.saleServices.findAllDiscountedByPercent(
-                percent.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP)
+                percent / 100
         );
 
         model.addAttribute("sales", allSales);

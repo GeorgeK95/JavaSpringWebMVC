@@ -1,9 +1,5 @@
 package carDealer.model.request;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Null;
-import java.math.BigDecimal;
-
 /**
  * Created by George-Lenovo on 03/04/2018.
  */
@@ -11,7 +7,7 @@ public class AddPartRequestModel {
 
     private String name;
 
-    private BigDecimal price;
+    private Double price;
 
     private Long quantity;
 
@@ -41,11 +37,11 @@ public class AddPartRequestModel {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

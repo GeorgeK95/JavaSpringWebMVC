@@ -1,7 +1,6 @@
 package carDealer.model.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -19,7 +18,7 @@ public class Part {
     private String name;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private Double price;
 
     @Column(nullable = false)
     private Long quantity;
@@ -46,11 +45,11 @@ public class Part {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

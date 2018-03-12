@@ -1,7 +1,7 @@
 <main>
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" th:action="@{/Sales/add}" method="post">
+            <form class="form-horizontal" th:action="@{/Sales/add}" method="post" th:object="${addSaleRequestModel}">
                 <fieldset>
                     <legend class="text-center">Add Sale</legend>
 
@@ -23,7 +23,7 @@
                             <select id="partDropDownBtn" class="form-control" name="carId">
                                 <option disabled selected value> -- Select Car --</option>
                                 <option th:each="car : ${cars}"
-                                        th:value="${car.getId()}"
+                                        th:value="${car.id}"
                                         th:text="|${car.getMake()} ${car.getModel()}|"></option>
                             </select>
                         </div>

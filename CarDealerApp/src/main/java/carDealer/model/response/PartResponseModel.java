@@ -1,6 +1,5 @@
 package carDealer.model.response;
 
-import java.math.BigDecimal;
 
 /**
  * Created by George-Lenovo on 03/03/2018.
@@ -11,7 +10,7 @@ public class PartResponseModel {
 
     private String name;
 
-    private BigDecimal price;
+    private Double price;
 
     private long quantity;
 
@@ -31,11 +30,11 @@ public class PartResponseModel {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

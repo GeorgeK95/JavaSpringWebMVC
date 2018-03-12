@@ -61,7 +61,7 @@ public class CarController {
 
     @GetMapping("{id}/parts")
     public String carsWithParts(@PathVariable Long id, Model model) {
-        CarResponseModel car = this.carServices.findOne(id);
+        CarResponseModel car = this.carServices.findOne(id, CarResponseModel.class);
         List<PartResponseModel> partsByCarId = this.partServices.getPartsByCarId(id);
 
         model.addAttribute("car", car);

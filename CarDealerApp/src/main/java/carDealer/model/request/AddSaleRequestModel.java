@@ -1,9 +1,5 @@
 package carDealer.model.request;
 
-import carDealer.model.entity.Customer;
-
-import java.math.BigDecimal;
-
 /**
  * Created by George-Lenovo on 03/05/2018.
  */
@@ -13,7 +9,7 @@ public class AddSaleRequestModel {
 
     private Long carId;
 
-    private BigDecimal discount;
+    private Double discount;
 
     public Long getCustomerId() {
         return customerId;
@@ -31,11 +27,11 @@ public class AddSaleRequestModel {
         this.carId = carId;
     }
 
-    public BigDecimal getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 }

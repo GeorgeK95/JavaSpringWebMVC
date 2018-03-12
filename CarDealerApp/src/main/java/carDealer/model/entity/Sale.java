@@ -1,7 +1,8 @@
 package carDealer.model.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by George-Lenovo on 03/03/2018.
@@ -14,14 +15,28 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(nullable = false)
-    private BigDecimal discount;
+    //    @Column(nullable = false)
+    private Double discount;
 
-    @OneToOne
-    private Car car;
+    @OneToMany(mappedBy = "sale")
+    private Set<Car> cars;
 
     @ManyToOne
     private Customer customer;
+
+    public Sale() {
+    }
+
+    public Sale(Double discount, Car car, Customer customer) {
+        this.discount = discount;
+        this.cars = new HashSet<>();
+        this.addCar(car);
+        this.customer = customer;
+    }
+
+    private void addCar(Car car) {
+        this.cars.add(car);
+    }
 
     public Long getId() {
         return id;
@@ -31,20 +46,20 @@ public class Sale {
         this.id = id;
     }
 
-    public BigDecimal getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
-    public Car getCar() {
-        return car;
+    public Set<Car> getCars() {
+        return cars;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
 
     public Customer getCustomer() {

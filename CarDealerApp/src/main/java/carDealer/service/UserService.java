@@ -7,7 +7,6 @@ import carDealer.repository.UserRepository;
 import carDealer.model.entity.Role;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,10 +34,10 @@ public class UserService {
             return false;
         }
 
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         User user = DTOConvertUtil.convert(userRequestModel, User.class);
-        user.setPassword(bCryptPasswordEncoder.encode(userRequestModel.getPassword()));
+//        user.setPassword(bCryptPasswordEncoder.encode(userRequestModel.getPassword()));
 
         Role userRole = this.roleRepository.findByName("ROLE_USER");
         user.addRole(userRole);

@@ -20,4 +20,5 @@ public interface CarsRepository extends JpaRepository<Car, Long> {
             "order by c.model asc, c.travelledDistance desc")
     List<Car> carsFromMake(@Param("make") String make);
 
+    Car findFirstByMakeAndModel(String make, String model);
 }

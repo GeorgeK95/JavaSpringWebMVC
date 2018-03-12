@@ -35,9 +35,9 @@ public class CarServices {
         return DTOConvertUtil.convert(this.repository.carsFromMake(make), CarResponseModel.class);
     }
 
-    public CarResponseModel findOne(Long id) {
+    public <T> T findOne(Long id, Class<T> clazz) {
         Car one = this.repository.findOne(id);
-        return DTOConvertUtil.convert(one, CarResponseModel.class);
+        return DTOConvertUtil.convert(one, clazz);
     }
 
     public List<CarResponseModel> findAll() {

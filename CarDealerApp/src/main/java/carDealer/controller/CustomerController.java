@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -56,14 +55,14 @@ public class CustomerController {
 
     @GetMapping("{id}")
     public String totalSalesByCustomer(@PathVariable Long id, Model model) {
-        CustomerResponseModel customer = this.customerServices.findOne(id);
+        CustomerResponseModel customer = this.customerServices.findOne(id, CustomerResponseModel.class);
 //        List<SaleResponseModel> totalSalesByCustomer = this.saleServices.totalSalesByCustomer(id);
         List<SaleResponseModel> totalSalesByCustomer = DTOConvertUtil.convert(customer.getSales(), SaleResponseModel.class);
 
         model.addAttribute("salesCount", totalSalesByCustomer.size());
         model.addAttribute("customerName", customer.getName());
 
-        BigDecimal money = this.customerServices.getTotalMoneySpentForCars(totalSalesByCustomer);
+        Double money = this.customerServices.getTotalMoneySpentForCars(totalSalesByCustomer);
 
         model.addAttribute("money", money);
         model.addAttribute("view", "customer/customerSalesTable");
@@ -89,7 +88,7 @@ public class CustomerController {
     public String edit(Model model, @PathVariable Long id) {
         model.addAttribute("view", "customer/edit");
         model.addAttribute("customerId", id);
-        model.addAttribute("customer", this.customerServices.findOne(id));
+        model.addAttribute("customer", this.customerServices.findOne(id, CustomerResponseModel.class));
 
         return "base-layout";
     }

@@ -22,4 +22,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "from Customer c\n" +
             "order by c.birthDate desc, c.isYoungDriver desc")
     List<Customer> orderedDescendingCustomers();
+
+    Customer findByName(String customerName);
 }

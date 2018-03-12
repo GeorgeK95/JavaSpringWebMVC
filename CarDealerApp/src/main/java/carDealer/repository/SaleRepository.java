@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -21,5 +20,5 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     List<Sale> findAllDiscounted();
 
     @Query("select s from Sale s where s.discount = :percent")
-    List<Sale> findAllDiscountedByPercent(@Param("percent") BigDecimal percent);
+    List<Sale> findAllDiscountedByPercent(@Param("percent") Double percent);
 }
