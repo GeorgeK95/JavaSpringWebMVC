@@ -1,4 +1,4 @@
-package carDealer.service;
+package carDealer.service.impl;
 
 import carDealer.model.entity.Customer;
 import carDealer.model.request.AddCustomerRequestModel;
@@ -7,6 +7,7 @@ import carDealer.model.response.CustomerResponseModel;
 import carDealer.model.response.PartResponseModel;
 import carDealer.model.response.SaleResponseModel;
 import carDealer.repository.CustomerRepository;
+import carDealer.service.api.ICustomerServices;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ import static carDealer.utils.DateUtils.getDateDiff;
  */
 @Service
 @Transactional
-public class CustomerServices {
+public class CustomerServices implements ICustomerServices {
     private static final int YEAR_DAYS = 365;
     private static final int NEEDED_YEARS = 18;
     private static final int NEEDED_DAYS = YEAR_DAYS * NEEDED_YEARS;
@@ -39,14 +40,17 @@ public class CustomerServices {
         this.repository = repository;
     }
 
+    @Override
     public List<CustomerResponseModel> orderedAscendingCustomers() {
         return DTOConvertUtil.convert(this.repository.orderedAscendingCustomers(), CustomerResponseModel.class);
     }
 
+    @Override
     public List<CustomerResponseModel> orderedDescendingCustomers() {
         return DTOConvertUtil.convert(this.repository.orderedDescendingCustomers(), CustomerResponseModel.class);
     }
 
+    @Override
     public Double getTotalMoneySpentForCars(List<SaleResponseModel> totalSalesByCustomer) {
         Double money = new Double(0);
         for (SaleResponseModel saleResponseModel : totalSalesByCustomer) {
@@ -58,10 +62,12 @@ public class CustomerServices {
         return money;
     }
 
+    @Override
     public <T> T findOne(Long id, Class<T> clazz) {
         return DTOConvertUtil.convert(this.repository.findOne(id), clazz);
     }
 
+    @Override
     public void add(AddCustomerRequestModel customerRequestModel, RedirectAttributes model) {
         Date date = Date.from(customerRequestModel.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
         this.dateDiff = getDateDiff(new Date(), date, TimeUnit.DAYS);
@@ -79,6 +85,7 @@ public class CustomerServices {
     }
 
 
+    @Override
     public void edit(Long id, AddCustomerRequestModel customerRequestModel,
                      RedirectAttributes model) {
         Customer toEdit = this.repository.findOne(id);
@@ -117,6 +124,7 @@ public class CustomerServices {
                 value);
     }
 
+    @Override
     public List<CustomerResponseModel> findAll() {
         return DTOConvertUtil.convert(this.repository.findAll(), CustomerResponseModel.class);
     }

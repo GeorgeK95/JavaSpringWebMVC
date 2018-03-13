@@ -1,7 +1,7 @@
 package carDealer.interceptors;
 
 import carDealer.annotations.LoggedAction;
-import carDealer.service.LoggerService;
+import carDealer.service.api.ILoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
-    private final LoggerService loggerService;
+    private final ILoggerService ILoggerService;
 
     @Autowired
-    public LoggerInterceptor(LoggerService loggerService) {
-        this.loggerService = loggerService;
+    public LoggerInterceptor(ILoggerService ILoggerService) {
+        this.ILoggerService = ILoggerService;
     }
 
     @Override
@@ -32,6 +32,6 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
         ModelMap modelMap = modelAndView.getModelMap();
 
-        this.loggerService.addLog(modelMap);
+        this.ILoggerService.addLog(modelMap);
     }
 }

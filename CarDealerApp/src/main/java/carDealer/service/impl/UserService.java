@@ -1,10 +1,11 @@
-package carDealer.service;
+package carDealer.service.impl;
 
 import carDealer.model.entity.User;
-import carDealer.model.request.AddUserRequestModel;
+import carDealer.model.request.UserRegisterRequestModel;
 import carDealer.repository.RoleRepository;
 import carDealer.repository.UserRepository;
 import carDealer.model.entity.Role;
+import carDealer.service.api.IUserService;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Service
 @Transactional
-public class UserService {
+public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -27,7 +28,8 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public boolean register(AddUserRequestModel userRequestModel, RedirectAttributes model) {
+    @Override
+    public boolean register(UserRegisterRequestModel userRequestModel, RedirectAttributes model) {
 
         if (!userRequestModel.getPassword().equals(userRequestModel.getConfirmPassword())) {
             model.addFlashAttribute("user_registration_notification_false", "Invalid email, username or password mismatch.");
@@ -48,7 +50,15 @@ public class UserService {
         return true;
     }
 
+    @Override
+    public User findByEmail(String email) {
+        User byEmail = this.userRepository.findByEmail(email);
+        return byEmail != null ? DTOConvertUtil.convert(byEmail, User.class) : null;
+    }
+
+    @Override
     public User findByUsername(String username) {
-        return DTOConvertUtil.convert(this.userRepository.findByUsername(username), User.class);
+        User byUsername = this.userRepository.findByUsername(username);
+        return byUsername != null ? DTOConvertUtil.convert(byUsername, User.class) : null;
     }
 }

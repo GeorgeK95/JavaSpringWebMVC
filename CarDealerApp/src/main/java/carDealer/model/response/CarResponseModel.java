@@ -1,5 +1,6 @@
 package carDealer.model.response;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -13,7 +14,7 @@ public class CarResponseModel {
 
     private String model;
 
-    private Double travelledDistance;
+    private BigDecimal travelledDistance;
 
     private SaleResponseModel sale;
 
@@ -43,11 +44,11 @@ public class CarResponseModel {
         this.model = model;
     }
 
-    public Double getTravelledDistance() {
+    public BigDecimal getTravelledDistance() {
         return travelledDistance;
     }
 
-    public void setTravelledDistance(Double travelledDistance) {
+    public void setTravelledDistance(BigDecimal travelledDistance) {
         this.travelledDistance = travelledDistance;
     }
 

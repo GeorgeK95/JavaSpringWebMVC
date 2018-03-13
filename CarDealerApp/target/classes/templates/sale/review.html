@@ -26,17 +26,29 @@
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="discountInfo">Discount</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="discountInfo" readonly="readonly"
-                                   name="discount"
-                                   th:value="*{discount}"/>
+                        <div class="col-sm-4" id="discountInfo">
+
+                            <th:block th:if="*{customer.isYoungDriver()}">
+                                <input type="hidden" th:value="*{discount} + 5"
+                                       name="discount"
+                                       readonly="readonly"/>
+                                <input type="text" class="form-control" readonly="readonly"
+                                       name="discountStr"
+                                       th:value="|*{discount} (+5%)|"/>
+                            </th:block>
+
+                            <th:block th:unless="*{customer.isYoungDriver()}">
+                                <input type="text" class="form-control" readonly="readonly"
+                                       name="discount"
+                                       th:value="*{discount}"/>
+                            </th:block>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="carPrice">Car Price</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="carPrice" readonly="readonly"
+                            <input id="carPrice" type="text" class="form-control" readonly="readonly"
                                    name="carPrice"
                                    th:value="*{#numbers.formatDecimal(car.getPrice(),0,2)}"/>
                         </div>

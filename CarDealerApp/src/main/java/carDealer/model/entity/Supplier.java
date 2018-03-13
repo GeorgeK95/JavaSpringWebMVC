@@ -20,7 +20,7 @@ public class Supplier {
     @Column(nullable = false)
     private boolean isImporter;
 
-    @OneToMany(mappedBy = "supplier", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "supplier", orphanRemoval = true)
     private Set<Part> parts;
 
     public Long getId() {

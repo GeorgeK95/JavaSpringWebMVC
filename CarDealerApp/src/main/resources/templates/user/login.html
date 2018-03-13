@@ -12,7 +12,7 @@
                     </th:block>
 
                     <th:block th:unless="${login_failed} == null">
-                        <div class="alert alert-success text-center">
+                        <div class="alert alert-danger text-center">
                             <strong th:text="${login_failed}"></strong>
                         </div>
                     </th:block>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">

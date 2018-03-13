@@ -1,9 +1,10 @@
-package carDealer.service;
+package carDealer.service.impl;
 
 import carDealer.model.entity.Supplier;
 import carDealer.model.request.AddSupplierRequestModel;
 import carDealer.model.response.SupplierResponseModel;
 import carDealer.repository.SuppliersRepository;
+import carDealer.service.api.ISupplierServices;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class SupplierServices {
+public class SupplierServices implements ISupplierServices {
     private SuppliersRepository repository;
 
     @Autowired
@@ -25,22 +26,27 @@ public class SupplierServices {
         this.repository = repository;
     }
 
+    @Override
     public List<SupplierResponseModel> filterLocalSuppliers() {
         return DTOConvertUtil.convert(this.repository.findAllByIsImporterTrue(), SupplierResponseModel.class);
     }
 
+    @Override
     public List<SupplierResponseModel> filterImportersSuppliers() {
         return DTOConvertUtil.convert(this.repository.findAllByIsImporterFalse(), SupplierResponseModel.class);
     }
 
+    @Override
     public List<SupplierResponseModel> findAll() {
         return DTOConvertUtil.convert(this.repository.findAll(), SupplierResponseModel.class);
     }
 
+    @Override
     public SupplierResponseModel findOne(Long id) {
         return DTOConvertUtil.convert(this.repository.findOne(id), SupplierResponseModel.class);
     }
 
+    @Override
     public void addSale(AddSupplierRequestModel supplierRequestModel, RedirectAttributes attributes) {
         this.repository.saveAndFlush(DTOConvertUtil.convert(supplierRequestModel, Supplier.class));
 
@@ -48,6 +54,7 @@ public class SupplierServices {
                 String.format("Successfully added supplier with name %s.", supplierRequestModel.getSupplierName()));
     }
 
+    @Override
     public void editSupply(Long id, AddSupplierRequestModel requestModel) {
         Supplier supplyToEdit = this.repository.findOne(id);
         supplyToEdit.setImporter(requestModel.isImporter());
@@ -55,6 +62,7 @@ public class SupplierServices {
         this.repository.saveAndFlush(supplyToEdit);
     }
 
+    @Override
     public void deleteSupply(Long id) {
         this.repository.delete(id);
     }

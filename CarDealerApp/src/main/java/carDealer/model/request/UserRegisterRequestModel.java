@@ -3,7 +3,7 @@ package carDealer.model.request;
 /**
  * Created by George-Lenovo on 03/04/2018.
  */
-public class AddUserRequestModel {
+public class UserRegisterRequestModel {
 
     private String email;
 

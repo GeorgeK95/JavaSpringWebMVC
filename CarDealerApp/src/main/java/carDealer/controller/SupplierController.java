@@ -1,12 +1,13 @@
 package carDealer.controller;
 
 import carDealer.annotations.LoggedAction;
+import carDealer.annotations.PreAuthenticated;
 import carDealer.model.enums.Operation;
 import carDealer.model.enums.TableEnum;
 import carDealer.model.request.AddSupplierRequestModel;
 import carDealer.model.response.SupplierResponseModel;
-import carDealer.service.LoggerService;
-import carDealer.service.SupplierServices;
+import carDealer.service.api.ILoggerService;
+import carDealer.service.api.ISupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,14 +24,15 @@ import java.util.List;
 @RequestMapping("/suppliers/")
 public class SupplierController {
 
-    private final SupplierServices supplierServices;
+    private final ISupplierServices ISupplierServices;
 
     @Autowired
-    public SupplierController(SupplierServices services) {
-        this.supplierServices = services;
+    public SupplierController(ISupplierServices services) {
+        this.ISupplierServices = services;
     }
 
     @GetMapping("add")
+    @PreAuthenticated(loggedInUserRequirement = true)
     public String addSupplier(Model model) {
         model.addAttribute("view", "supplier/add");
 
@@ -41,10 +41,11 @@ public class SupplierController {
 
     @LoggedAction
     @PostMapping("add")
+    @PreAuthenticated(loggedInUserRequirement = true)
     public ModelAndView addSupplierProcess(@ModelAttribute AddSupplierRequestModel supplierRequestModel, RedirectAttributes attributes) {
-        this.supplierServices.addSale(supplierRequestModel, attributes);
+        this.ISupplierServices.addSale(supplierRequestModel, attributes);
 
-        return LoggerService.constructModelAndView(
+        return ILoggerService.constructModelAndView(
                 "redirect:/suppliers/all/",
                 "someUser: TOBEDONE",
                 Operation.ADD.toString(),
@@ -54,7 +55,7 @@ public class SupplierController {
 
     @GetMapping("local")
     public String local(Model model) {
-        List<SupplierResponseModel> allByIsImportedTrue = this.supplierServices.filterLocalSuppliers();
+        List<SupplierResponseModel> allByIsImportedTrue = this.ISupplierServices.filterLocalSuppliers();
 
         model.addAttribute("suppliers", allByIsImportedTrue);
         model.addAttribute("view", "supplier/suppliersTable");
@@ -64,7 +65,7 @@ public class SupplierController {
 
     @GetMapping("importers")
     public String importers(Model model) {
-        List<SupplierResponseModel> allByIsImportedFalse = this.supplierServices.filterImportersSuppliers();
+        List<SupplierResponseModel> allByIsImportedFalse = this.ISupplierServices.filterImportersSuppliers();
 
         model.addAttribute("suppliers", allByIsImportedFalse);
         model.addAttribute("view", "supplier/suppliersTable");
@@ -74,7 +75,7 @@ public class SupplierController {
 
     @GetMapping("all")
     public String allSuppliers(Model model) {
-        List<SupplierResponseModel> allSuppliers = this.supplierServices.findAll();
+        List<SupplierResponseModel> allSuppliers = this.ISupplierServices.findAll();
 
         model.addAttribute("suppliers", allSuppliers);
         model.addAttribute("view", "supplier/suppliersActionTable");
@@ -83,19 +84,21 @@ public class SupplierController {
     }
 
     @GetMapping("edit/{id}")
+    @PreAuthenticated(loggedInUserRequirement = true)
     public String editSupplier(Model model, @PathVariable Long id) {
         model.addAttribute("view", "supplier/edit");
-        model.addAttribute("supplier", this.supplierServices.findOne(id));
+        model.addAttribute("supplier", this.ISupplierServices.findOne(id));
 
         return "base-layout";
     }
 
     @PostMapping("edit/{id}")
+    @PreAuthenticated(loggedInUserRequirement = true)
     @LoggedAction
     public ModelAndView editSupplierProcess(@PathVariable Long id, @ModelAttribute AddSupplierRequestModel requestModel) {
-        this.supplierServices.editSupply(id, requestModel);
+        this.ISupplierServices.editSupply(id, requestModel);
 
-        return LoggerService.constructModelAndView(
+        return ILoggerService.constructModelAndView(
                 "redirect:/suppliers/all/",
                 "someUser: TOBEDONE",
                 Operation.EDIT.toString(),
@@ -105,19 +108,21 @@ public class SupplierController {
     }
 
     @GetMapping("delete/{id}")
+    @PreAuthenticated(loggedInUserRequirement = true)
     public String deleteSupplier(Model model, @PathVariable Long id) {
         model.addAttribute("view", "supplier/delete");
-        model.addAttribute("supplier", this.supplierServices.findOne(id));
+        model.addAttribute("supplier", this.ISupplierServices.findOne(id));
 
         return "base-layout";
     }
 
     @LoggedAction
     @PostMapping("delete/{id}")
+    @PreAuthenticated(loggedInUserRequirement = true)
     public ModelAndView deleteSupplierProcess(@PathVariable Long id) {
-        this.supplierServices.deleteSupply(id);
+        this.ISupplierServices.deleteSupply(id);
 
-        return LoggerService.constructModelAndView(
+        return ILoggerService.constructModelAndView(
                 "redirect:/suppliers/all/",
                 "someUser: TOBEDONE",
                 Operation.DELETE.toString(),

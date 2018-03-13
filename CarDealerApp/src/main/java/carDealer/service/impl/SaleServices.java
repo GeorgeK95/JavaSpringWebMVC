@@ -1,4 +1,4 @@
-package carDealer.service;
+package carDealer.service.impl;
 
 import carDealer.model.entity.Car;
 import carDealer.model.entity.Customer;
@@ -10,11 +10,13 @@ import carDealer.model.response.SaleResponseModel;
 import carDealer.repository.CarsRepository;
 import carDealer.repository.CustomerRepository;
 import carDealer.repository.SaleRepository;
+import carDealer.service.api.ISaleServices;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class SaleServices {
+public class SaleServices implements ISaleServices {
 
     private final SaleRepository saleRepository;
     private final CustomerRepository customerRepository;
@@ -36,23 +38,28 @@ public class SaleServices {
         this.carsRepository = carsRepository;
     }
 
+    @Override
     public List<SaleResponseModel> findAllDiscounted() {
         return DTOConvertUtil.convert(this.saleRepository.findAllDiscounted(), SaleResponseModel.class);
     }
 
+    @Override
     public List<SaleResponseModel> findAllDiscountedByPercent(Double percent) {
         return DTOConvertUtil.convert(this.saleRepository.findAllDiscountedByPercent(percent), SaleResponseModel.class);
     }
 
+    @Override
     public List<SaleResponseModel> totalSalesByCustomer(Long id) {
         return DTOConvertUtil.convert(this.saleRepository.totalSalesByCustomer(id), SaleResponseModel.class);
     }
 
+    @Override
     public List<SaleResponseModel> findAll() {
         return DTOConvertUtil.convert(this.saleRepository.findAll(), SaleResponseModel.class);
     }
 
-    public void addSale(AddSaleReviewRequestModel saleRequestModel) {
+    @Override
+    public void addSale(AddSaleReviewRequestModel saleRequestModel, RedirectAttributes attributes) {
         Car car = this.carsRepository.findFirstByMakeAndModel(
                 saleRequestModel.getCarMakeModel().split("\\s")[0],
                 saleRequestModel.getCarMakeModel().split("\\s")[1]
@@ -63,14 +70,17 @@ public class SaleServices {
         Sale sale = new Sale(saleRequestModel.getDiscount(), car, customer);
 
         this.saleRepository.saveAndFlush(sale);
+
+        attributes.addFlashAttribute("add_sale_notify", "Sale added successfully.");
     }
 
+    @Override
     public SaleInfoResponseModel constructSaleInfoResponseModelObject(Model model) {
         SaleInfoResponseModel saleInfoResponseModel = (SaleInfoResponseModel) model.asMap().get("sale");
         SaleFinalizeResponseModel finalizeSaleResponseModel = new SaleFinalizeResponseModel();
         finalizeSaleResponseModel.setCar(saleInfoResponseModel.getCar());
         finalizeSaleResponseModel.setCustomer(saleInfoResponseModel.getCustomer());
-        finalizeSaleResponseModel.setDiscount(saleInfoResponseModel.getDiscount() * 100);
+        finalizeSaleResponseModel.setDiscount(saleInfoResponseModel.getDiscount());
         return saleInfoResponseModel;
     }
 }

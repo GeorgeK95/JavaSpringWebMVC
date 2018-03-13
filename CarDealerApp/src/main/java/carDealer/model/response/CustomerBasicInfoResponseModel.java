@@ -9,6 +9,8 @@ public class CustomerBasicInfoResponseModel {
 
     private String name;
 
+    private boolean isYoungDriver;
+
     public Long getId() {
         return id;
     }
@@ -23,5 +25,13 @@ public class CustomerBasicInfoResponseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isYoungDriver() {
+        return isYoungDriver;
+    }
+
+    public void setYoungDriver(boolean youngDriver) {
+        isYoungDriver = youngDriver;
     }
 }

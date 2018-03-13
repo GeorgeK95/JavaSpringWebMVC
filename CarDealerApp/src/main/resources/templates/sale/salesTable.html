@@ -1,4 +1,11 @@
 <main>
+
+    <th:block th:unless="${add_sale_notify} == null">
+        <div class="alert alert-success text-center">
+            <strong th:text="${add_sale_notify}"></strong>
+        </div>
+    </th:block>
+
     <table>
         <tr>
             <th>Sale Id</th>

@@ -1,14 +1,19 @@
 package carDealer.model.request;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by George-Lenovo on 03/05/2018.
  */
 public class AddSaleRequestModel {
 
+    @NotNull
     private Long customerId;
 
+    @NotNull
     private Long carId;
 
+    @NotNull
     private Double discount;
 
     public Long getCustomerId() {

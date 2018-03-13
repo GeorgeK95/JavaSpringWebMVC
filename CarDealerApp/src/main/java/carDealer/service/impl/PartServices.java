@@ -1,9 +1,10 @@
-package carDealer.service;
+package carDealer.service.impl;
 
 import carDealer.model.entity.Part;
 import carDealer.model.request.AddPartRequestModel;
 import carDealer.model.response.PartResponseModel;
 import carDealer.repository.PartRepository;
+import carDealer.service.api.IPartServices;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class PartServices {
+public class PartServices implements IPartServices {
 
     private final PartRepository repository;
 
@@ -26,18 +27,22 @@ public class PartServices {
         this.repository = repository;
     }
 
+    @Override
     public List<PartResponseModel> getPartsByCarId(Long id) {
         return DTOConvertUtil.convert(this.repository.findCarPartsById(id), PartResponseModel.class);
     }
 
+    @Override
     public PartResponseModel findOne(Long id) {
         return DTOConvertUtil.convert(this.repository.findOne(id), PartResponseModel.class);
     }
 
+    @Override
     public List<PartResponseModel> findAll() {
         return DTOConvertUtil.convert(this.repository.findAll(), PartResponseModel.class);
     }
 
+    @Override
     public void addPart(AddPartRequestModel requestModel, RedirectAttributes model) {
         Part part = DTOConvertUtil.convert(requestModel, Part.class);
         part.setId(null);
@@ -50,6 +55,7 @@ public class PartServices {
         model.addFlashAttribute("part_add_notification", message);
     }
 
+    @Override
     public void editPart(Long id, AddPartRequestModel requestModel, RedirectAttributes model) {
         Part part = this.repository.findOne(id);
 
@@ -61,6 +67,7 @@ public class PartServices {
         this.repository.saveAndFlush(part);
     }
 
+    @Override
     public void deletePart(Long id, AddPartRequestModel requestModel, RedirectAttributes model) {
         Part part = this.repository.findOne(id);
 

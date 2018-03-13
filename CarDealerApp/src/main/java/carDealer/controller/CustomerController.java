@@ -3,8 +3,8 @@ package carDealer.controller;
 import carDealer.model.request.AddCustomerRequestModel;
 import carDealer.model.response.CustomerResponseModel;
 import carDealer.model.response.SaleResponseModel;
-import carDealer.service.CustomerServices;
-import carDealer.service.SaleServices;
+import carDealer.service.api.ICustomerServices;
+import carDealer.service.api.ISaleServices;
 import carDealer.utils.DTOConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,18 +24,18 @@ import java.util.List;
 @RequestMapping("/customers/")
 public class CustomerController {
 
-    private final CustomerServices customerServices;
-    private final SaleServices saleServices;
+    private final ICustomerServices ICustomerServices;
+    private final ISaleServices ISaleServices;
 
     @Autowired
-    public CustomerController(CustomerServices customerServices, SaleServices saleServices) {
-        this.customerServices = customerServices;
-        this.saleServices = saleServices;
+    public CustomerController(ICustomerServices ICustomerServices, ISaleServices ISaleServices) {
+        this.ICustomerServices = ICustomerServices;
+        this.ISaleServices = ISaleServices;
     }
 
     @GetMapping("all/ascending")
     public String ascending(Model model) {
-        List<CustomerResponseModel> orderedCustomers = this.customerServices.orderedAscendingCustomers();
+        List<CustomerResponseModel> orderedCustomers = this.ICustomerServices.orderedAscendingCustomers();
 
         model.addAttribute("customers", orderedCustomers);
         model.addAttribute("view", "customer/customersTable");
@@ -45,7 +45,7 @@ public class CustomerController {
 
     @GetMapping("all/descending")
     public String descending(Model model) {
-        List<CustomerResponseModel> orderedCustomers = this.customerServices.orderedDescendingCustomers();
+        List<CustomerResponseModel> orderedCustomers = this.ICustomerServices.orderedDescendingCustomers();
 
         model.addAttribute("customers", orderedCustomers);
         model.addAttribute("view", "customer/customersTable");
@@ -55,14 +55,14 @@ public class CustomerController {
 
     @GetMapping("{id}")
     public String totalSalesByCustomer(@PathVariable Long id, Model model) {
-        CustomerResponseModel customer = this.customerServices.findOne(id, CustomerResponseModel.class);
-//        List<SaleResponseModel> totalSalesByCustomer = this.saleServices.totalSalesByCustomer(id);
+        CustomerResponseModel customer = this.ICustomerServices.findOne(id, CustomerResponseModel.class);
+
         List<SaleResponseModel> totalSalesByCustomer = DTOConvertUtil.convert(customer.getSales(), SaleResponseModel.class);
 
         model.addAttribute("salesCount", totalSalesByCustomer.size());
         model.addAttribute("customerName", customer.getName());
 
-        Double money = this.customerServices.getTotalMoneySpentForCars(totalSalesByCustomer);
+        Double money = this.ICustomerServices.getTotalMoneySpentForCars(totalSalesByCustomer);
 
         model.addAttribute("money", money);
         model.addAttribute("view", "customer/customerSalesTable");
@@ -79,7 +79,7 @@ public class CustomerController {
 
     @PostMapping("add")
     public String addProcess(RedirectAttributes model, AddCustomerRequestModel customerRequestModel) {
-        this.customerServices.add(customerRequestModel, model);
+        this.ICustomerServices.add(customerRequestModel, model);
 
         return "redirect:/customers/add";
     }
@@ -88,7 +88,7 @@ public class CustomerController {
     public String edit(Model model, @PathVariable Long id) {
         model.addAttribute("view", "customer/edit");
         model.addAttribute("customerId", id);
-        model.addAttribute("customer", this.customerServices.findOne(id, CustomerResponseModel.class));
+        model.addAttribute("customer", this.ICustomerServices.findOne(id, CustomerResponseModel.class));
 
         return "base-layout";
     }
@@ -96,7 +96,7 @@ public class CustomerController {
     @PostMapping("edit/{id}")
     public String editProcess(RedirectAttributes model, AddCustomerRequestModel customerRequestModel,
                               @PathVariable Long id) {
-        this.customerServices.edit(id, customerRequestModel, model);
+        this.ICustomerServices.edit(id, customerRequestModel, model);
 
         return "redirect:/customers/edit/".concat(String.valueOf(id));
     }
