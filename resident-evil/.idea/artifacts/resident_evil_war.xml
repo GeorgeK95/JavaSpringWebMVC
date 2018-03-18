@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="resident-evil:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="resident-evil-0.0.1-SNAPSHOT.war">
-      <element id="artifact" artifact-name="resident-evil:war exploded" />
-    </root>
-  </artifact>
-</component>

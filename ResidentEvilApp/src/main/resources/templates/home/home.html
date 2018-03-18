@@ -1,0 +1,9 @@
+<main>
+
+    <th:block th:unless="${login_successful} == null">
+        <div class="alert alert-success text-center">
+            <strong th:text="${login_successful}"></strong>
+        </div>
+    </th:block>
+
+</main>
