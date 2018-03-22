@@ -1,6 +1,11 @@
 package residentEvilApp.model.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +29,33 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Transient
+    private boolean isAccountNonExpired;
+
+    @Transient
+    private boolean isAccountNonLocked;
+
+    @Transient
+    private boolean isCredentialsNonExpired;
+
+    @Transient
+    private boolean isEnabled;
+
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles")
-    private Set<Role> roles;
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private Set<Role> authorities;
 
     public User() {
-        this.roles = new HashSet<>();
+        this.authorities = new HashSet<>();
+    }
+
+    public User(String email, String username, String password) {
+        this();
+        this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
     public Long getId() {
@@ -40,16 +66,8 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -64,15 +82,40 @@ public class User {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public void addRole(Role role) {
-        this.roles.add(role);
+        this.authorities.add(role);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.isEnabled;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

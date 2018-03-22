@@ -45,7 +45,7 @@ public class UserAuthenticationInterceptor extends HandlerInterceptorAdapter {
                     String roleName = handlerMethod.getMethodAnnotation(PreAuthenticated.class).inRole();
                     Role userRole = this.userService.getUserRole(userModel.getUsername());
 
-                    if (roleName.equals("ADMIN") && userRole.getName().equals("USER")) {
+                    if (roleName.equals("ADMIN") && userRole.getAuthority().equals("USER")) {
                         response.sendRedirect("/login");
                     }
 

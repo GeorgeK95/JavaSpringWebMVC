@@ -10,6 +10,7 @@ import residentEvilApp.model.request.EditVirusRequestModel;
 import residentEvilApp.model.response.VirusResponseModel;
 import residentEvilApp.repository.CapitalRepository;
 import residentEvilApp.repository.VirusRepository;
+import residentEvilApp.service.contacts.ICapitalService;
 import residentEvilApp.service.contacts.IVirusService;
 import residentEvilApp.util.DTOConverter;
 import residentEvilApp.validator.ResidentEvilDateValidator;
@@ -24,12 +25,13 @@ import java.util.*;
 public class VirusService implements IVirusService {
 
     private final VirusRepository virusRepository;
-    private final CapitalRepository capitalRepository;
+
+    private final ICapitalService capitalService;
 
     @Autowired
-    public VirusService(VirusRepository virusRepository, CapitalRepository capitalRepository) {
+    public VirusService(VirusRepository virusRepository, ICapitalService capitalService) {
         this.virusRepository = virusRepository;
-        this.capitalRepository = capitalRepository;
+        this.capitalService = capitalService;
     }
 
     @Override
@@ -40,10 +42,10 @@ public class VirusService implements IVirusService {
     @Override
     public void addVirus(AddVirusRequestModel requestModel) {
         Virus virus = DTOConverter.convert(requestModel, Virus.class);
-        List<Capital> capitalsSet = this.capitalRepository.findAllById(List.of(requestModel.getCapitalIds()));
+        List<Capital> capitalsSet = this.capitalService.findAllById(List.of(requestModel.getCapitalIds()));
         virus.setCapitals(new HashSet<>(capitalsSet));
         capitalsSet.forEach(c->c.setVirus(virus));
-        this.capitalRepository.saveAll(capitalsSet);
+        this.capitalService.addVirus(capitalsSet);
         this.virusRepository.saveAndFlush(virus);
     }
 

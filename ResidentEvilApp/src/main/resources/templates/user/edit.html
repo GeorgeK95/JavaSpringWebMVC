@@ -1,0 +1,39 @@
+<main xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div class="container body-content span=8 offset=2">
+        <div id="divWell" class="well">
+            <fieldset>
+                <legend>Spread a new Virus!</legend>
+
+                <form id="addVirusForm" class="form-horizontal"
+                      th:action="@{/users/edit/{id}(id=${userEditRequestModel.getId()})}"
+                      th:object="${userEditRequestModel}"
+                      method="POST">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" th:field="*{username}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" th:field="*{password}"/>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="checkbox-inline"><input type="checkbox" th:field="*{user}">User</label>
+                        <label class="checkbox-inline"><input type="checkbox" th:field="*{moderator}">Moderator</label>
+                        <label class="checkbox-inline"><input type="checkbox" th:field="*{admin}">Admin</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/users/all}">Cancel</a>
+                            <input value="Spread" type="submit" class="btn btn-primary"/>
+                        </div>
+                    </div>
+
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</main>

@@ -10,18 +10,32 @@
                 <li class="nav-item">
                     <a class="nav-link" style="color: white" href="/">Home</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown"  sec:authorize="isAuthenticated()">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false" style="color: white">
                         Viruses
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/viruses/show">Show</a>
-                        <a class="dropdown-item" href="/viruses/add">Add</a>
+                        <a sec:authorize="hasRole('ROLE_MODERATOR') OR hasRole('ROLE_ADMIN')" class="dropdown-item"
+                           href="/viruses/add">Add</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item"  sec:authorize="isAuthenticated()">
                     <a class="nav-link" style="color: white" href="/map">Map</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" style="color: white" href="/users/all">Users</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link" style="color: white" href="/register">Register</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link" style="color: white" href="/login">Login</a>
+                </li>
+                <li class="nav-item right" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" style="color: white" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>

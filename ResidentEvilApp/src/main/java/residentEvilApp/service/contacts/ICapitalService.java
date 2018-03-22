@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface ICapitalService {
     List<Capital> findAll();
+
+    List<Capital> findAllById(List<Long> capitalIds);
+
+    void addVirus(List<Capital> capitalsSet);
 }

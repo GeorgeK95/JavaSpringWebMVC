@@ -1,5 +1,7 @@
 package residentEvilApp.model.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,16 +11,16 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String authority;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    /*@ManyToMany(mappedBy = "authorities")
+    private Set<User> users;*/
 
     public Long getId() {
         return id;
@@ -28,23 +30,29 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public Role() {
-        this.users = new HashSet<>();
+//        this.users = new HashSet<>();
     }
 
-    public Set<User> getUsers() {
+    public Role(String authority) {
+//        this();
+        this.authority = authority;
+    }
+
+    /*public Set<User> getUsers() {
         return users;
     }
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }*/
+
+    @Override
+    public String getAuthority() {
+        return this.authority;
     }
 }

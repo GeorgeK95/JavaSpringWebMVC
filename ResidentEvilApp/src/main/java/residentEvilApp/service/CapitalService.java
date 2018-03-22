@@ -28,4 +28,14 @@ public class CapitalService implements ICapitalService {
     public List<Capital> findAll() {
         return this.capitalRepository.findAll();
     }
+
+    @Override
+    public List<Capital> findAllById(List<Long> capitalIds) {
+        return this.capitalRepository.findAllById(capitalIds);
+    }
+
+    @Override
+    public void addVirus(List<Capital> capitalsSet) {
+        this.capitalRepository.saveAll(capitalsSet);
+    }
 }

@@ -1,0 +1,25 @@
+<main>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Username</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getUsername()}"></td>
+                <td>
+                    <a th:href="@{/users/edit/{id} (id=${user.getId()})}" class="btn btn-outline-warning">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{/users/delete/{id} (id=${user.getId()})}" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</main>

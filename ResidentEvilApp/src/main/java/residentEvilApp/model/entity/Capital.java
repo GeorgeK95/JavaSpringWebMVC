@@ -29,6 +29,15 @@ public class Capital {
     @ManyToOne
     private Virus virus;
 
+    public Capital() {
+    }
+
+    public Capital(String name, BigDecimal latitude, BigDecimal longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Long getId() {
         return id;
     }
