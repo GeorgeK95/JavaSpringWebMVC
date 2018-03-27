@@ -1,0 +1,47 @@
+<amin>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/register}" method="post">
+                <fieldset>
+                    <legend class="text-center">Register</legend>
+
+                    <th:block th:if="${password_mismatch} != null">
+                        <div class="alert alert-danger text-center" th:text="${password_mismatch}">
+                        </div>
+                    </th:block>
+
+                    <div class="form-group text-center">
+                        <label class=" control-label" for="username">Username</label>
+                        <input class=" form-control" type="text" id="username" placeholder="Username"
+                               name="username" required="required"/>
+                    </div>
+
+                    <div class="form-group text-center ">
+                        <label class=" control-label" for="user_password_first">Password</label>
+                        <input type="password" class=" form-control" id="user_password_first"
+                               placeholder="Password"
+                               name="password" required="required"/>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <label class=" control-label" for="user_password_second">Confirm Password</label>
+                        <input type="password" class="form-control" id="user_password_second" placeholder="Password"
+                               name="confirmPassword" required="required"/>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <label class="control-label" for="preferences">Preferences</label>
+                        <textarea class="form-control" rows="6" id="preferences" name="preferences"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                            <input value="Register" type="submit" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</amin>

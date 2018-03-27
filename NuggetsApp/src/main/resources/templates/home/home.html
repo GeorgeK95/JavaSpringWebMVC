@@ -1,0 +1,5 @@
+<main>
+    <th:block sec:authorize="isAuthenticated()">
+        <h1 class="text-center" th:text="|Hello, ${#authentication.getPrincipal().getUsername()}|"></h1>
+    </th:block>
+</main>

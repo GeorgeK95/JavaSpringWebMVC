@@ -1,0 +1,48 @@
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-faded" style="background-color: #960C4E;">
+        <a class="navbar-brand" href="/" style="color: white">Nuggets App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white" href="/">Home</a>
+                </li>
+                <!--<li class="nav-item dropdown"  sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" style="color: white">
+                        Viruses
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/viruses/show">Show</a>
+                        <a sec:authorize="hasRole('ROLE_MODERATOR') OR hasRole('ROLE_ADMIN')" class="dropdown-item"
+                           href="/viruses/add">Add</a>
+                    </div>
+                </li>-->
+
+                <li class="nav-item"  sec:authorize="isAuthenticated()">
+                    <a class="nav-link" style="color: white" href="/preferences">Preferences</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" style="color: white" href="/nuggets">All Nuggets</a>
+                </li>
+
+                <!--<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" style="color: white" href="/users/all">Users</a>
+                </li>-->
+
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link" style="color: white" href="/register">Register</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link" style="color: white" href="/login">Login</a>
+                </li>
+                <li class="nav-item right" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" style="color: white" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
