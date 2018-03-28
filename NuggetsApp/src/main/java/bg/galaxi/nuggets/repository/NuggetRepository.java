@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface NuggetRepository extends JpaRepository<Nugget, Long> {
 
-    @Query(value = "select n.id from nuggets n where n.id in (:ids)", nativeQuery = true)
-    List<Nugget> findAllByIds(@Param("ids") String ids);
+//    @Query(value = "SELECT n FROM Nugget n WHERE n.id IN (:ids)")
+    List<Nugget> findAllByIdIn(String ids);
+//    List<Nugget> findAllByIds(@Param("ids") String ids);
 }

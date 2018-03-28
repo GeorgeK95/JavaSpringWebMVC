@@ -1,13 +1,22 @@
 package bg.galaxy.nuggetsconsumer.model.pojo;
 
+import java.util.List;
+
 /**
  * Created by George-Lenovo on 27/03/2018.
  */
 public class NewUserPOJO {
 
+    private List<String> ids;
+
     private String username;
 
     private String preferences;
+
+    public NewUserPOJO(String username, String preferences) {
+        this.username = username;
+        this.preferences = preferences;
+    }
 
     public String getUsername() {
         return username;
@@ -25,4 +34,11 @@ public class NewUserPOJO {
         this.preferences = preferences;
     }
 
+    public List<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<String> ids) {
+        this.ids = ids;
+    }
 }

@@ -35,8 +35,13 @@ public class PreferencesListener {
     @JmsListener(destination = "extracted_preferences")
     public void userRegisteredListener(Message<String> preferences) {
         NewUserPOJO newUserPOJO = new Gson().fromJson(preferences.getPayload(), NewUserPOJO.class);
+        System.out.println(newUserPOJO.getIds());
         User user = this.userRepository.findFirstByUsername(newUserPOJO.getUsername());
-        List<Nugget> nuggets = this.nuggetService.findAllById(newUserPOJO.getPreferences().split(","));
+        System.out.println(user);
+        System.out.println("idssss:"+newUserPOJO.getIds());
+        List<Nugget> nuggets = this.nuggetService.findAllById(newUserPOJO.getIds().toArray(new String[0]));
         user.setPreferences(nuggets);
+        System.out.println(user);
+//        userRepository.saveAndFlush(user);
     }
 }

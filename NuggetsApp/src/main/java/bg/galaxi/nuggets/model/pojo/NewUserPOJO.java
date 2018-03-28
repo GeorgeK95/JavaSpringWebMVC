@@ -1,9 +1,13 @@
 package bg.galaxi.nuggets.model.pojo;
 
+import java.util.List;
+
 /**
  * Created by George-Lenovo on 27/03/2018.
  */
 public class NewUserPOJO {
+
+    private List<String> ids;
 
     private String username;
 
@@ -30,4 +34,11 @@ public class NewUserPOJO {
         this.preferences = preferences;
     }
 
+    public List<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<String> ids) {
+        this.ids = ids;
+    }
 }

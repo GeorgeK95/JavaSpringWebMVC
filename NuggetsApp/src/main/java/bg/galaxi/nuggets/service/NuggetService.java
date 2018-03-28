@@ -34,6 +34,9 @@ public class NuggetService implements INuggetService {
     public List<Nugget> findAllById(String[] ids) {
         StringBuilder idsSql = new StringBuilder();
         Arrays.stream(ids).forEach(n -> idsSql.append(String.format("'%s',", n)));
-        return this.nuggetRepository.findAllByIds(idsSql.toString().substring(0, idsSql.length()-1));
+        System.out.println(idsSql);
+        List<Nugget> allByIds = this.nuggetRepository.findAllByIdIn(idsSql.toString().substring(0, idsSql.length() - 1));
+        allByIds.stream().map(Nugget::getName).forEach(System.out::println);
+        return allByIds;
     }
 }

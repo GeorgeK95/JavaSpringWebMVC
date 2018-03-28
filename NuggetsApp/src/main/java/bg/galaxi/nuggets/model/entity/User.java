@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Nugget> preferences;
 
     @Transient
@@ -118,5 +118,14 @@ public class User implements UserDetails {
 
     public void setPreferences(List<Nugget> preferences) {
         this.preferences = preferences;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", preferences=" + preferences.toString() +
+                '}';
     }
 }
