@@ -10,7 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Start {
 
     public static void main(String[] args) {
-        //please execute the script in resources/data
+        //please execute the viruses script in resources/data
+        //NOT FOUND PAGE: http://localhost:8080/adadsa/adsdas
+        //VIRUS NOT FOUND: http://localhost:8080/viruses/edit/222 with admin admin
+        //UNAUTHORIZED: http://localhost:8080/viruses/edit/222 with user user
+
         SpringApplication.run(Start.class, args);
     }
 }

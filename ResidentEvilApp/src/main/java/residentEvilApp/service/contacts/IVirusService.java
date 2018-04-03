@@ -1,5 +1,7 @@
 package residentEvilApp.service.contacts;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import residentEvilApp.model.entity.Virus;
 import residentEvilApp.model.request.AddVirusRequestModel;
@@ -24,4 +26,12 @@ public interface IVirusService {
 
     @Transactional
     String findAllMapViruses();
+
+    Page<Virus> listAllByPage(Pageable pageable);
+
+    default long getTotalPages() {
+        return getTotalPages(12);
+    }
+
+    long getTotalPages(int size);
 }

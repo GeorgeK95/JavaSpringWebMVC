@@ -1,12 +1,18 @@
 package residentEvilApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import residentEvilApp.exception.VirusNotFoundException;
 import residentEvilApp.model.entity.Capital;
+import residentEvilApp.model.entity.Virus;
 import residentEvilApp.model.enums.CreatorType;
 import residentEvilApp.model.enums.MagnitudeType;
 import residentEvilApp.model.enums.MutationType;
@@ -79,9 +85,12 @@ public class VirusController {
     }
 
     @GetMapping("show")
-    public String showViruses(Model model) {
+    public String showViruses(@PageableDefault() Pageable pageable, Model model) {
+        Page<Virus> currentVirusPage = this.virusService.listAllByPage(pageable);
+
         model.addAttribute("view", "virus/show");
-        model.addAttribute("viruses", this.virusService.findAll());
+        model.addAttribute("viruses", currentVirusPage);
+
         return "base-layout";
     }
 
@@ -120,4 +129,14 @@ public class VirusController {
 
         return "redirect:/viruses/show";
     }
+
+    @ExceptionHandler(VirusNotFoundException.class)
+    public ModelAndView virusNotFound() {
+        ModelAndView modelAndView = new ModelAndView("base-layout");
+        modelAndView.getModelMap().addAttribute("view", "error/virus-not-found");
+        modelAndView.getModelMap().addAttribute("pageTitle", "Virus Not Found");
+
+        return modelAndView;
+    }
+
 }

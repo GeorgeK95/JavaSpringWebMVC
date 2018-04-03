@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import residentEvilApp.exception.UserNotFoundException;
 import residentEvilApp.model.entity.Role;
 import residentEvilApp.model.entity.User;
 import residentEvilApp.model.request.UserDeleteRequestModel;
@@ -21,6 +22,7 @@ import residentEvilApp.service.contacts.IUserService;
 import residentEvilApp.util.DTOConverter;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,7 +58,11 @@ public class UserService implements IUserService {
 
     @Override
     public User findByUsername(String username) {
-        return this.userRepository.findFirstByUsername(username);
+        User user = this.userRepository.findFirstByUsername(username);
+
+        if (user == null) throw new UserNotFoundException();
+
+        return user;
     }
 
     @Override
@@ -82,21 +88,32 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUser(Long id) {
-        this.userRepository.delete(this.userRepository.findById(id).get());
+        try {
+            User user = this.userRepository.findById(id).get();
+            this.userRepository.delete(user);
+        } catch (NoSuchElementException nsee) {
+            throw new UserNotFoundException();
+        }
+
     }
 
     @Override
     public void editUser(Long id, UserEditRequestModel userModel) {
-        User user = this.userRepository.findById(id).get();
+        try {
+            User user = this.userRepository.findById(id).get();
 
-        user.setUsername(userModel.getUsername());
-        user.setPassword(this.passwordEncoder.encode(userModel.getPassword()));
+            user.setUsername(userModel.getUsername());
+            user.setPassword(this.passwordEncoder.encode(userModel.getPassword()));
 
-        if (userModel.getModerator()) user.addRole(this.roleService.findFirstByAuthority("ROLE_MODERATOR"));
-        if (userModel.getUser()) user.addRole(this.roleService.findFirstByAuthority("ROLE_USER"));
-        if (userModel.getAdmin()) user.addRole(this.roleService.findFirstByAuthority("ROLE_ADMIN"));
+            if (userModel.getModerator()) user.addRole(this.roleService.findFirstByAuthority("ROLE_MODERATOR"));
+            if (userModel.getUser()) user.addRole(this.roleService.findFirstByAuthority("ROLE_USER"));
+            if (userModel.getAdmin()) user.addRole(this.roleService.findFirstByAuthority("ROLE_ADMIN"));
 
-        this.userRepository.saveAndFlush(user);
+            this.userRepository.saveAndFlush(user);
+        } catch (NoSuchElementException nsee) {
+            throw new UserNotFoundException();
+        }
+
     }
 
     @Override

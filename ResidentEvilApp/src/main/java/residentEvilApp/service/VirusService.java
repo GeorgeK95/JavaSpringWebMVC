@@ -1,8 +1,11 @@
 package residentEvilApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import residentEvilApp.exception.VirusNotFoundException;
 import residentEvilApp.model.entity.Capital;
 import residentEvilApp.model.entity.Virus;
 import residentEvilApp.model.request.AddVirusRequestModel;
@@ -16,6 +19,7 @@ import residentEvilApp.util.DTOConverter;
 import residentEvilApp.validator.ResidentEvilDateValidator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by George-Lenovo on 16/03/2018.
@@ -44,7 +48,7 @@ public class VirusService implements IVirusService {
         Virus virus = DTOConverter.convert(requestModel, Virus.class);
         List<Capital> capitalsSet = this.capitalService.findAllById(List.of(requestModel.getCapitalIds()));
         virus.setCapitals(new HashSet<>(capitalsSet));
-        capitalsSet.forEach(c->c.setVirus(virus));
+        capitalsSet.forEach(c -> c.setVirus(virus));
         this.capitalService.addVirus(capitalsSet);
         this.virusRepository.saveAndFlush(virus);
     }
@@ -52,6 +56,9 @@ public class VirusService implements IVirusService {
     @Override
     public <T> T findOne(Long id, Class<T> clazz) {
         Virus virus = this.virusRepository.findFirstById(id);
+        if (virus == null) {
+            throw new VirusNotFoundException();
+        }
         return DTOConverter.convert(virus, clazz);
     }
 
@@ -117,5 +124,15 @@ public class VirusService implements IVirusService {
         }
 
         return joiner;
+    }
+
+    @Override
+    public Page<Virus> listAllByPage(Pageable pageable) {
+        return this.virusRepository.findAll(pageable);
+    }
+
+    @Override
+    public long getTotalPages(int size) {
+        return this.virusRepository.count() / size;
     }
 }

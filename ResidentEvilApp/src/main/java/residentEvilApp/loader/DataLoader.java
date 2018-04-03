@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import residentEvilApp.model.entity.Role;
 import residentEvilApp.model.entity.User;
+import residentEvilApp.model.entity.Virus;
 import residentEvilApp.repository.UserRepository;
 
 import java.util.Set;
@@ -28,6 +29,10 @@ public class DataLoader implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args) {
+        addUsersAndRoles();
+    }
+
+    private void addUsersAndRoles() {
         User admin = new User("admin@admin.com", "admin", this.passwordEncoder.encode("admin"));
         User user = new User("user@abv.bg", "user", this.passwordEncoder.encode("user"));
         User moderator = new User("moderator@abv.bg", "moderator", this.passwordEncoder.encode("moderator"));
